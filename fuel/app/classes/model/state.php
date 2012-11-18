@@ -1,16 +1,17 @@
 <?php
 
-class Model_Country extends \Orm\Model
+class Model_State extends \Orm\Model
 {
 	protected static $_properties = array(
 		'id',
+		'country_id',
 		'name',
 		'code',
 		'created_at',
 		'updated_at'
 	);
 
-	protected static $_has_many = array('states');
+	protected static $_belongs_to = array('country');
 
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(

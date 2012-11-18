@@ -7,6 +7,7 @@ return array(
 			'default' => 
 			array(
 				0 => '001_create_countries',
+				1 => '002_create_states',
 			),
 		),
 		'module' => 
