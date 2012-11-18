@@ -1,18 +1,18 @@
 <?php
 
-class Model_Colony extends \Orm\Model
+class Model_Trail extends \Orm\Model
 {
 	protected static $_properties = array(
 		'id',
-		'id',
 		'user_id',
+		'colony_id',
 		'name',
 		'approved_by',
 		'created_at',
 		'updated_at'
 	);
 
-	protected static $_has_many = array('trails');
+	protected static $_belongs_to = array('colony');
 
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(
