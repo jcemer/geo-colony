@@ -13,6 +13,7 @@ return array(
 				4 => '005_rename_field_lastname_to_family_in_landholders',
 				5 => '006_create_colonies',
 				6 => '007_create_trails',
+				7 => '008_create_nucleus',
 			),
 		),
 		'module' => 
