@@ -14,6 +14,9 @@ return array(
 				5 => '006_create_colonies',
 				6 => '007_create_trails',
 				7 => '008_create_nucleus',
+				8 => '009_rename_table_nucleus_to_landnucleus',
+				9 => '010_rename_table_trails_to_landtrails',
+				10 => '011_create_sections',
 			),
 		),
 		'module' => 
