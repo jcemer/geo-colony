@@ -16,5 +16,5 @@
  */
 
 return array(
-
+    'default_timezone' => 'America/Sao_Paulo'
 );
