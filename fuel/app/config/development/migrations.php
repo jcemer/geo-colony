@@ -17,6 +17,9 @@ return array(
 				8 => '009_rename_table_nucleus_to_landnucleus',
 				9 => '010_rename_table_trails_to_landtrails',
 				10 => '011_create_sections',
+				11 => '012_create_land_sides',
+				12 => '013_create_landsides',
+				13 => '014_create_edges',
 			),
 		),
 		'module' => 
