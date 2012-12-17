@@ -2,7 +2,7 @@
     require 'class.database.php';
     
     DB::conn()->exec('USE `colonias-v3`');
-    $rs = DB::exec('SELECT * FROM lote WHERE id <= 24477 ORDER BY id');
+    $rs = DB::exec('SELECT * FROM lote WHERE ID >= 22680 AND ID <= 24477 ORDER BY ID');
     DB::conn()->exec('USE `geo-colony`');
 
     echo '<pre>';
@@ -16,7 +16,7 @@
         $city = DB::row('SELECT * FROM cities WHERE name = "'.$row['Cidade'].'"');
         
         $fields = array(
-            'id' => $row['id'],
+            'id' => $row['ID'],
             'user_id' => 1,
             'colony_id' => $colony['id'],
             'trail_id' => $trail['id'],

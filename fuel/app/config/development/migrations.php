@@ -22,6 +22,7 @@ return array(
 				13 => '014_create_edges',
 				14 => '015_create_sources',
 				15 => '016_create_plots',
+				16 => '017_create_plot_coordinates',
 			),
 		),
 		'module' => 
