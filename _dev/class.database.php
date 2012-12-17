@@ -262,4 +262,8 @@
             return $this->i;
         }
     }
+
+    
+    new DB('mysql', 'localhost', 'root', 'z4j9p2', 'geo-colony');
+    setlocale(LC_CTYPE, 'pt_BR');
 ?>

@@ -1,7 +1,5 @@
 <?php
     require 'class.database.php';
-    new DB('mysql', 'localhost', 'root', 'z4j9p2', 'geo-colony');
-    setlocale(LC_CTYPE, 'pt_BR');
     
     $rs = DB::select('landholders', array('id' => '', 'name' => '', 'lastname' => ''));
 
