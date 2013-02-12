@@ -16,3 +16,10 @@ nbproject/
 /fuel/app/config/crypt.php
 
 node_modules
+
+
+# Compiled files
+# ===========
+
+/public/assets/css/main.css
+/public/assets/js/main.js
