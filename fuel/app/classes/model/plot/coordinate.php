@@ -9,7 +9,7 @@ class Model_Plot_Coordinate extends \Orm\Model
 		'longitude'
 	);
 
-	protected static $_has_many = array('plots');
+	protected static $_belongs_to = array('plots');
 
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(
