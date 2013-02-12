@@ -23,6 +23,7 @@ return array(
 				14 => '015_create_sources',
 				15 => '016_create_plots',
 				16 => '017_create_plot_coordinates',
+				17 => '018_create_plot_landholders',
 			),
 		),
 		'module' => 
