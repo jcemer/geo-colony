@@ -15,6 +15,8 @@ class Model_Plot_Landholder extends \Orm\Model
 		'observation'
 	);
 
+	protected static $_belongs_to = array('plots', 'landholders');
+
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(
 			'events' => array('before_insert'),
