@@ -9,6 +9,7 @@
 	<?php echo Asset::css('main.css'); ?>
 </head>
 <body>
+	<div id="map-canvas"></div>
 <?php echo $content; ?>
 	
 <?php if (Session::get_flash('success')): ?>
@@ -26,5 +27,7 @@
 					</p>
 				</div>
 <?php endif; ?>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<?php echo Asset::js('main.js'); ?>
 </body>
 </html>
