@@ -1,14 +1,145 @@
 @import 'nib'
 
+sidebar-size = 230px
+
+// Core
+// ===========
 html, body
     width: 100%
     height: 100%
     overflow: hidden
 
 body
-    background: yellow
+    font: 12px 'lucida grande', tahoma, verdana, arial, sans-serif
+    color: #444
+
+a
+    color: #D9320C
+    &:hover
+        text-decoration: none
+
+#sidebar, #map
+    position: absolute
+    top: 0
+    bottom: 0
+
+.buttons
+    height: 24px
+    margin-bottom: 15px
+
+.button
+    display: inline-block
+    font-size: 11px
+    line-height: 22px
+    padding: 0 6px
+    margin: 0
+    color: #666
+    cursor: pointer
+    text-decoration: none
+    transition: .08s all ease-out
+    background: linear-gradient(darken(#FBECE8, 3) 10%, darken(#FBECE8, 5) 50%, darken(#FBECE8, 20))
+    background-size: 200%
+    border: 1px solid #F2BBAE
+    text-shadow: 1px 1px 1px rgba(white, .3)
+    box-shadow: inset 0 0 2px white, 1px 2px 1px rgba(black, .08)
+    &:hover
+        background-position: 0 50%
+        color: #333
+    &:active
+        box-shadow: inset 0 1px 5px rgba(black, .1), 1px 2px 1px rgba(black, 0)
+
+// Sidebar
+// ===========
+#sidebar
+    width: sidebar-size
+    left: 0
+    box-sizing: border-box
+    padding: 20px 15px
+    box-shadow: 2px 0 16px rgba(black, .1)
+    z-index: 1
+    .logo
+        replace-text: url('../img/logo.png')
+        width: 160px
+        font-size: 22px
+        margin-bottom: 5px
+
+    .title
+        color: #999
+        font-size: 12px
+        font-weight: normal
+        margin-bottom: 20px
+
+    .footer
+        absolute: bottom 10px left 15px
+        font-size: 11px
+
+
+.colonies-list
+    font-size: 11px
+    margin-bottom: 5px
+    li
+        cursor: pointer
+        position: relative
+        background: url('../img/colonies-list.png') no-repeat
+        &:hover
+            background-position: 0 -40px
+            .label
+                background: #F9F9F9
+    .label
+        background: white
+        margin-left: 24px
+        padding: 2px 20px 2px 0
+        display: block
+    .remove-link
+        absolute: top bottom
+        right: 0
+        replace-text: url('../img/sprites.png')
+        background-position: 0 0
+        width: 13px
+        &:hover
+            background-position: 0 -50px
+
+.colonies-clean-button
+        float: right
+
+.panel
+    border-bottom: 1px solid #CCC
+    .header
+        text-transform: uppercase
+        font-weight: bold
+        font-size: 10px
+        padding: 7px 0
+        color: #999
+        padding-left: 12px
+        cursor: pointer
+        background: url('../img/sprites.png') 0 -100px no-repeat
+    .content
+        position: absolute
+        left: -9999px
+        max-height: 10px
+    label
+        display: block
+    select
+        margin: 0 0 5px 0
+        width: 100%
+    .button
+        float: right
+
+    &.open 
+        .header
+            background-position: 0 -150px
+        .content
+            transition: .5s all ease-out
+            position: static
+            overflow: hidden
+            max-height: 500px
+
+#search-colonies
+    border-top: 1px solid #CCC
+
 
 // Map
 // ===========
-#map-canvas
-    height: 100%
+#map
+    left: sidebar-size
+    right: 0

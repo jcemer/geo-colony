@@ -9,7 +9,7 @@ task 'build', ->
 
 task 'build:css', ->
     bundle [
-        'assets/css/normalize.css'
+        'assets/css/reset.css'
         'assets/css/main.styl'
     ], 'public/assets/css/main.css'
 
