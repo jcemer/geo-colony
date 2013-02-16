@@ -15,6 +15,7 @@ task 'build:css', ->
 
 task 'build:js', ->
     bundle [
+        'assets/js/backbone.js'
         'assets/js/main.coffee'
     ], 'public/assets/js/main.js'
 
