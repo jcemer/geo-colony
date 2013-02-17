@@ -1,6 +1,6 @@
-exports = window.App
+App = window.App
 
-new exports.View.TrailsSearch el: $('#trails-search')
+new App.View.TrailsSearch el: $('#trails-search')
 
 
 

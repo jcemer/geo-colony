@@ -1,5 +1,5 @@
-exports = window.App
+App = window.App
 
-exports.Model.Trail = Backbone.Model.extend()
-exports.Collection.Trails = Backbone.Collection.extend
-	model: exports.Model.Trail
+App.Model.Trail = Backbone.Model.extend()
+App.Collection.Trails = Backbone.Collection.extend
+	model: App.Model.Trail

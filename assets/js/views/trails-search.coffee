@@ -1,6 +1,6 @@
-exports = window.App
+App = window.App
 
-exports.View.TrailOption = Backbone.View.extend
+App.View.TrailOption = Backbone.View.extend
 	tagName: 'option'
 	initialize: ->
 		_.bindAll @, 'render'
@@ -9,12 +9,12 @@ exports.View.TrailOption = Backbone.View.extend
 		return this
 
 
-exports.View.TrailsSelect = Backbone.View.extend
+App.View.TrailsSelect = Backbone.View.extend
 	initialize: ->
 		_.bindAll @, 'addOne', 'addAll'
 		@collection?.bind 'reset', @addAll
 	addOne: (model) ->
-		view = new exports.View.TrailOption model: model
+		view = new App.View.TrailOption model: model
 		@views.push view
 		@$el.append view.render().el
 	addAll: ->
@@ -27,20 +27,20 @@ exports.View.TrailsSelect = Backbone.View.extend
 		@$el.trigger('disabled', disabled)
 
 
-exports.View.TrailsSearch = Backbone.View.extend
+App.View.TrailsSearch = Backbone.View.extend
 	events:
 		'disabled': 'disabled'
 
 	initialize: ->
 		_.bindAll @, 'changeSelectedColony'
 
-		@colony = $('#trails-search-colony')
-		@trail  = $('#trails-search-trail')
-		@button = $('#trails-search-button')
+		@colony = @$('#trails-search-colony')
+		@trail  = @$('#trails-search-trail')
+		@button = @$('#trails-search-button')
 
-		@trailsSelectView = new exports.View.TrailsSelect 
+		@trailsSelectView = new App.View.TrailsSelect 
 			el: @trail
-			collection: new exports.Collection.Trails
+			collection: new App.Collection.Trails
 
 		@colony.on 'change', @changeSelectedColony
 
