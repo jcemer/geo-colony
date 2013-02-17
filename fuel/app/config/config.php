@@ -16,5 +16,10 @@
  */
 
 return array(
-    'default_timezone' => 'America/Sao_Paulo'
+	'default_timezone' => 'America/Sao_Paulo',
+	'always_load' => array(
+		'packages' => array(
+			'orm',
+		),
+	),
 );
