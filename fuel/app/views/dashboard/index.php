@@ -4,8 +4,8 @@
 		<h2 class="title">Mapa das colônias <b>italianas</b> e <b>alemãs</b> no <b>Rio Grande do Sul</b></h2>
 	</header>
 	
-	<div id="colonies">
-		<ul class="colonies-list">
+	<div id="trails">
+		<ul class="trails-list">
 			<li style="background-color: #A9F16C">
 				<span class="label">Alencar Araripe</span>
 				<a href="#" class="remove-link" title="remover">remover</a>
@@ -20,24 +20,22 @@
 			</li>
 		</ul>
 		<div class="buttons">
-			<a href="#" class="colonies-clean-button button">limpar</a>
+			<a href="#" class="trails-clean-button button">limpar</a>
 		</div>
 	</div>
 	
-	<div id="search-colonies" class="panel open">
+	<div id="trails-search" class="panel open">
 		<h3 class="header">Colônias</h3>
 		<form action="" class="content">
 			<fieldset>
 				<ol>
 					<li>
-						<?php echo Form::label('Nome da colônia', 'colony_id', array('for' => 'search-colonies-colony_id')); ?>
-						<?php echo Form::select('colony_id', null, $colonies, array('id' => 'search-colonies-colony_id')); ?>
+						<?php echo Form::label('Nome da colônia', 'colony', array('for' => 'search-colonies-colony')); ?>
+						<?php echo Form::select('colony', null, $colonies, array('id' => 'search-colonies-colony')); ?>
 					</li>
 					<li>
-						<label for="">Nome da linha / travessão</label>
-						<select name="" id="">
-							<option value="">Nova Sardenha</option>
-						</select>
+						<?php echo Form::label('Nome da linha / travessão', 'trail', array('for' => 'search-colonies-trail')); ?>
+						<?php echo Form::select('trail', null, $trails, array('id' => 'search-colonies-trail', 'disabled' => true)); ?>
 					</li>
 				</ol>
 			</fieldset>
@@ -47,7 +45,7 @@
 		</form>
 	</div>
 	
-	<div id="search-locations" class="panel">
+	<div id="locations-search" class="panel">
 		<h3 class="header">Localidades</h3>
 		<form action="" class="content">
 			<fieldset>
@@ -72,7 +70,7 @@
 		</form>
 	</div>
 	
-	<div id="search-landholders" class="panel">
+	<div id="landholders-search" class="panel">
 		<h3 class="header">Proprietários</h3>
 		<form action="" class="content">
 			<fieldset>

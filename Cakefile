@@ -1,31 +1,43 @@
 flour = require 'flour'
 
+# Dev
+# ===========
+
+task 'dev', ->
+	# disable minifiers and compressions
+	flour.minifiers.js = null
+	flour.minifiers.css = null
+	flour.compilers.styl.compress = false
+
 # Build
 # ===========
 
 task 'build', ->
-    invoke 'build:css'
-    invoke 'build:js'
+	invoke 'build:css'
+	invoke 'build:js'
 
 task 'build:css', ->
-    bundle [
-        'assets/css/reset.css'
-        'assets/css/main.styl'
-    ], 'public/assets/css/main.css'
+	bundle [
+		'assets/css/reset.css'
+		'assets/css/main.styl'
+	], 'public/assets/css/main.css'
 
 task 'build:js', ->
-    bundle [
-        'assets/js/underscore.js'
-        'assets/js/backbone.js'
-        'assets/js/main.coffee'
-    ], 'public/assets/js/main.js'
+	bundle [
+		'assets/js/vendor/underscore.js'
+		'assets/js/vendor/backbone.js'
+		'assets/js/app.coffee'
+		'assets/js/models.coffee'
+		'assets/js/views/trails-search.coffee'
+		'assets/js/init.coffee'
+	], 'public/assets/js/main.js'
 
 
 # Watch
 # ===========
 
 task 'watch', ->
-    invoke 'build'
+	invoke 'build'
 
-    watch 'assets/css/', -> invoke 'build:css'
-    watch 'assets/js/', -> invoke 'build:js'
+	watch 'assets/css/', -> invoke 'build:css'
+	watch 'assets/js/', -> invoke 'build:js'
