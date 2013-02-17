@@ -30,17 +30,17 @@
 			<fieldset>
 				<ol>
 					<li>
-						<?php echo Form::label('Nome da colônia', 'colony', array('for' => 'search-colonies-colony')); ?>
-						<?php echo Form::select('colony', null, $colonies, array('id' => 'search-colonies-colony')); ?>
+						<?php echo Form::label('Nome da colônia', 'colony', array('for' => 'trails-search-colony')); ?>
+						<?php echo Form::select('colony', null, $colonies, array('id' => 'trails-search-colony')); ?>
 					</li>
 					<li>
-						<?php echo Form::label('Nome da linha / travessão', 'trail', array('for' => 'search-colonies-trail')); ?>
-						<?php echo Form::select('trail', null, $trails, array('id' => 'search-colonies-trail', 'disabled' => true)); ?>
+						<?php echo Form::label('Nome da linha / travessão', 'trail', array('for' => 'trails-search-trail')); ?>
+						<?php echo Form::select('trail', null, $trails, array('id' => 'trails-search-trail', 'disabled' => true)); ?>
 					</li>
 				</ol>
 			</fieldset>
 			<div class="buttons">
-				<button type="button" class="button">adicionar</button>
+				<button type="button" id="trails-search-button" class="button" disabled>adicionar</button>
 			</div>
 		</form>
 	</div>

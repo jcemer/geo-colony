@@ -21,15 +21,22 @@ exports.View.TrailsSelect = Backbone.View.extend
 		_.each(@views, (view) -> view.remove())
 		@views = []
 		@collection.each @addOne
-		@$el.attr('disabled', @$el.children().length <= 1)
+
+		disabled = @$el.children().length <= 1
+		@$el.attr('disabled', disabled)
+		@$el.trigger('disabled', disabled)
 
 
 exports.View.TrailsSearch = Backbone.View.extend
+	events:
+		'disabled': 'disabled'
+
 	initialize: ->
 		_.bindAll @, 'changeSelectedColony'
 
-		@colony = $('#search-colonies-colony')
-		@trail = $('#search-colonies-trail')
+		@colony = $('#trails-search-colony')
+		@trail  = $('#trails-search-trail')
+		@button = $('#trails-search-button')
 
 		@trailsSelectView = new exports.View.TrailsSelect 
 			el: @trail
@@ -38,5 +45,13 @@ exports.View.TrailsSearch = Backbone.View.extend
 		@colony.on 'change', @changeSelectedColony
 
 	changeSelectedColony: ->
-		@trailsSelectView.collection.url = 'api/colonies/' + @colony.val() + '/trails'
-		@trailsSelectView.collection.fetch()
+		colony_id = @colony.val()
+		if colony_id is '-1'
+			@trailsSelectView.collection.reset()
+		else
+			@trailsSelectView.collection.url = 'api/colonies/' + colony_id + '/trails'
+			@trailsSelectView.collection.fetch()
+
+	disabled: (event, data) ->
+		@button.attr('disabled', data)
+
