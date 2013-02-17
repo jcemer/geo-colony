@@ -1,32 +1,5 @@
 App = window.App
 
-App.View.TrailOption = Backbone.View.extend
-	tagName: 'option'
-	initialize: ->
-		_.bindAll @, 'render'
-	render: (event) ->
-		@$el.attr('value', @model.get('id')).html(@model.get('name'))
-		return this
-
-
-App.View.TrailsSelect = Backbone.View.extend
-	initialize: ->
-		_.bindAll @, 'addOne', 'addAll'
-		@collection?.bind 'reset', @addAll
-	addOne: (model) ->
-		view = new App.View.TrailOption model: model
-		@views.push view
-		@$el.append view.render().el
-	addAll: ->
-		_.each(@views, (view) -> view.remove())
-		@views = []
-		@collection.each @addOne
-
-		disabled = @$el.children().length <= 1
-		@$el.attr('disabled', disabled)
-		@$el.trigger('disabled', disabled)
-
-
 App.View.TrailsSearch = Backbone.View.extend
 	events:
 		'disabled': 'disabled'

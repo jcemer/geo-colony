@@ -28,7 +28,9 @@ task 'build:js', ->
 		'assets/js/vendor/backbone.js'
 		'assets/js/app.coffee'
 		'assets/js/models.coffee'
+		'assets/js/views/trail-option.coffee'
 		'assets/js/views/trails-search.coffee'
+		'assets/js/views/trails-select.coffee'
 		'assets/js/init.coffee'
 	], 'public/assets/js/main.js'
 
