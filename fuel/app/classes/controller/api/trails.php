@@ -14,4 +14,10 @@ class Controller_Api_Trails extends Controller_Rest
 
         return $this->response($data);
     }
+
+    public function get_id()
+    {
+        $data = Model_Trail::find($this->param('id'));
+        return $this->response($data);
+    }
 }

@@ -31,6 +31,7 @@ task 'build:js', ->
 		'assets/js/views/trail-option.coffee'
 		'assets/js/views/trails-search.coffee'
 		'assets/js/views/trails-select.coffee'
+		'assets/js/views/trails.coffee'
 		'assets/js/init.coffee'
 	], 'public/assets/js/main.js'
 

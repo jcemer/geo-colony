@@ -5,8 +5,6 @@ App.View.TrailsSearch = Backbone.View.extend
 		'disabled': 'disabled'
 
 	initialize: ->
-		_.bindAll @, 'changeSelectedColony'
-
 		@colony = @$('#trails-search-colony')
 		@trail  = @$('#trails-search-trail')
 		@button = @$('#trails-search-button')
@@ -15,7 +13,7 @@ App.View.TrailsSearch = Backbone.View.extend
 			el: @trail
 			collection: new App.Collection.Trails
 
-		@colony.on 'change', @changeSelectedColony
+		@colony.on 'change', @changeSelectedColony.bind(@)
 
 	changeSelectedColony: ->
 		colony_id = @colony.val()

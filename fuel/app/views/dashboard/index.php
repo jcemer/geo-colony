@@ -5,6 +5,12 @@
 	</header>
 	
 	<div id="trails">
+		<script type="text/html" id="trails-list-template">
+			<li style="background-color: <%= color %>">
+				<span class="label"><%= name %></span>
+				<a href="#" class="remove-link" title="remover">remover</a>
+			</li>
+		</script>
 		<ul class="trails-list">
 			<li style="background-color: #A9F16C">
 				<span class="label">Alencar Araripe</span>
