@@ -7,8 +7,12 @@ App.View.Trails = Backbone.View.extend
         @collection = new App.Collection.Trails
         @list = @$('.trails-list')
 
-        @collection?.bind 'sync', @addAll.bind(@)
+        @collection?.bind 'change', @addAll.bind(@)
         model = new App.Model.Trail id: 17, color: 'red'
+        model.fetch()
+        @collection.add model
+
+        model = new App.Model.Trail id: 23, color: 'blue'
         model.fetch()
         @collection.add model
 
