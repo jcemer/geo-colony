@@ -1,12 +1,11 @@
 App = window.App
 
-App.View.TrailsSelect = Backbone.View.extend
-    
+class App.View.ColonyTrailsSelect extends Backbone.View
     initialize: ->
         @collection?.bind 'reset', @addAll.bind(@)
     
     addOne: (model) ->
-        view = new App.View.TrailOption model: model
+        view = new App.View.ColonyTrailOption model: model
         @views.push view
         @$el.append view.render().el
     

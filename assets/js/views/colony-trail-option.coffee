@@ -1,6 +1,6 @@
 App = window.App
 
-App.View.TrailOption = Backbone.View.extend
+class App.View.ColonyTrailOption extends Backbone.View
     tagName: 'option'
     
     render: (event) ->

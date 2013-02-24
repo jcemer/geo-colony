@@ -1,7 +1,7 @@
 App = window.App
 
 new App.View.Trails el: $('#trails')
-new App.View.TrailsSearch el: $('#trails-search')
+new App.View.SearchTrail el: $('#search-trail')
 
 
 

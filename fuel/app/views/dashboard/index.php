@@ -6,52 +6,39 @@
 	
 	<div id="trails">
 		<script type="text/html" id="trails-list-template">
-			<li style="background-color: <%= color %>">
+			<li class="trail" data-trail_id="<%= id %>" style="background-color: <%= color %>">
 				<span class="label"><%= name %></span>
 				<a href="#" class="remove-link" title="remover">remover</a>
 			</li>
 		</script>
-		<ul class="trails-list">
-			<li style="background-color: #A9F16C">
-				<span class="label">Alencar Araripe</span>
-				<a href="#" class="remove-link" title="remover">remover</a>
-			</li>
-			<li style="background-color: #FF7373">
-				<span class="label">Alencar Araripe Alencar Araripe</span>
-				<a href="#" class="remove-link" title="remover">remover</a>
-			</li>
-			<li style="background-color: #61D7A4">
-				<span class="label">Barão de Cotegipe</span>
-				<a href="#" class="remove-link" title="remover">remover</a>
-			</li>
-		</ul>
+		<ul class="trails-list"></ul>
 		<div class="buttons">
 			<a href="#" class="trails-clean-button button">limpar</a>
 		</div>
 	</div>
 	
-	<div id="trails-search" class="panel open">
+	<div id="search-trail" class="panel open">
 		<h3 class="header">Colônias</h3>
 		<form action="" class="content">
 			<fieldset>
 				<ol>
 					<li>
-						<?php echo Form::label('Nome da colônia', 'colony', array('for' => 'trails-search-colony')); ?>
-						<?php echo Form::select('colony', null, $colonies, array('id' => 'trails-search-colony')); ?>
+						<?php echo Form::label('Nome da colônia', 'colony', array('for' => 'search-trail-colony')); ?>
+						<?php echo Form::select('colony', null, $colonies, array('id' => 'search-trail-colony')); ?>
 					</li>
 					<li>
-						<?php echo Form::label('Nome da linha / travessão', 'trail', array('for' => 'trails-search-trail')); ?>
-						<?php echo Form::select('trail', null, $trails, array('id' => 'trails-search-trail', 'disabled' => true)); ?>
+						<?php echo Form::label('Nome da linha / travessão', 'trail', array('for' => 'search-trail-trail')); ?>
+						<?php echo Form::select('trail', null, $trails, array('id' => 'search-trail-trail', 'disabled' => true)); ?>
 					</li>
 				</ol>
 			</fieldset>
 			<div class="buttons">
-				<button type="button" id="trails-search-button" class="button" disabled>adicionar</button>
+				<button type="button" id="search-trail-button" class="button" disabled>adicionar</button>
 			</div>
 		</form>
 	</div>
 	
-	<div id="locations-search" class="panel">
+	<div id="search-location" class="panel">
 		<h3 class="header">Localidades</h3>
 		<form action="" class="content">
 			<fieldset>
@@ -76,7 +63,7 @@
 		</form>
 	</div>
 	
-	<div id="landholders-search" class="panel">
+	<div id="search-landholder" class="panel">
 		<h3 class="header">Proprietários</h3>
 		<form action="" class="content">
 			<fieldset>

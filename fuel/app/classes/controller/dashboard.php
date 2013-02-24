@@ -12,7 +12,7 @@ class Controller_Dashboard extends Controller_Template
         $trails_data = array();
 
         // adding select option
-        $select_option = array('id' => -1, 'name' => 'Selecione...');
+        $select_option = array('id' => '-', 'name' => 'Selecione...');
 
         array_unshift($colonies_data, $select_option);
         $colonies_data = Arr::assoc_to_keyval($colonies_data, 'id', 'name');

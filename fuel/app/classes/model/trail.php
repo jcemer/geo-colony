@@ -24,4 +24,23 @@ class Model_Trail extends \Orm\Model
 			'mysql_timestamp' => false,
 		),
 	);
+
+	public static function findByIds($ids, $options) {
+		foreach ($ids as $id)
+		{
+			if (!isset($where))
+			{
+				$where = array('id', $id);
+			}
+			else
+			{
+				$where = array(
+					array('id', $id),
+					'or' => $where
+				);
+			}
+		}
+		$options['where'] = $where;
+		return self::find('all', $options);
+	}
 }

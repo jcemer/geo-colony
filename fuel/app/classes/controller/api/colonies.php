@@ -32,7 +32,8 @@ class Controller_Api_Colonies extends Controller_Rest
         foreach ($main_data[$this->param('related')] as $related)
         {
             $data[] = array(
-                'name' => $related['name'],
+                'id'        => $related['id'],
+                'name'      => $related['name'],
                 'colony_id' => $related['colony_id']
             );
         }

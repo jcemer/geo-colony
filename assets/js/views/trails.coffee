@@ -1,26 +1,46 @@
 App = window.App
 
-App.View.Trails = Backbone.View.extend
+class App.View.Trails extends Backbone.View
     template: _.template($('#trails-list-template').html())
 
     initialize: ->
         @collection = new App.Collection.Trails
         @list = @$('.trails-list')
 
-        @collection?.bind 'change', @addAll.bind(@)
-        model = new App.Model.Trail id: 17, color: 'red'
+        App.on 'addTrail', @onAddTrail.bind(@)
+        @list.on 'click', '.remove-link', @onRemoveTrail.bind(@)
+
+        @collection.bind 'sync', @addAll.bind(@)
+        @loadStorage()
+
+    onAddTrail: (id) ->
+        model = new App.Model.Trail id: id, color: 'yellow'
         model.fetch()
         @collection.add model
 
-        model = new App.Model.Trail id: 23, color: 'blue'
-        model.fetch()
-        @collection.add model
+    onRemoveTrail: (event) ->
+        link = $(event.target)
+        el = link.closest('.trail')
+        el.remove()
+        model = @collection.get el.data('trail_id')
+        model.destroy()
 
-    addAll: ->
-        @list.html('')
-        @collection.each @addOne.bind(@)
+    loadStorage: ->
+        @collection.fetch({
+            data: {
+                id: [17, 23, 24]
+            }
+        })
+
+    addAll: (models) ->
+        if models.each
+            models.each @addOne.bind(@)
+        else
+            @addOne(models)
 
     addOne: (model) ->
-        @list.append(@template(model.toJSON()))
+        data = model.toJSON()
+        data.color = 'red'
+        @list.append(@template(data))
 
 
