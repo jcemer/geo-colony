@@ -1,46 +1,57 @@
 App = window.App
 
 class App.View.Trails extends Backbone.View
-    template: _.template($('#trails-list-template').html())
+	template: _.template($('#trails-list-template').html())
 
-    initialize: ->
-        @collection = new App.Collection.Trails
-        @list = @$('.trails-list')
+	initialize: ->
+		@collection = new App.Collection.Trails
+		@collection.bind 'sync', @onSync.bind(@)
 
-        App.on 'addTrail', @onAddTrail.bind(@)
-        @list.on 'click', '.remove-link', @onRemoveTrail.bind(@)
+		# add / remove
+		@list = @$('.trails-list')
+		App.on 'addTrail', @onAddTrail.bind(@)
+		@list.on 'click', '.remove-link', @onRemoveTrail.bind(@)
+		
+		# storage
+		@storage = new App.Storage('trails')
+		@collection.bind 'add',    @addToStorage.bind(@)
+		@collection.bind 'remove', @removeFromStorage.bind(@)
+		@fetchStoredCollection()
 
-        @collection.bind 'sync', @addAll.bind(@)
-        @loadStorage()
+	onAddTrail: (id) ->
+		model = new App.Model.Trail id: id
+		model.fetch()
+		@collection.add model
 
-    onAddTrail: (id) ->
-        model = new App.Model.Trail id: id, color: 'yellow'
-        model.fetch()
-        @collection.add model
+	onRemoveTrail: (event) ->
+		link = $(event.target)
+		el = link.closest('.trail')
+		el.remove()
+		model = @collection.get el.data('trail_id')
+		@collection.remove(model)
 
-    onRemoveTrail: (event) ->
-        link = $(event.target)
-        el = link.closest('.trail')
-        el.remove()
-        model = @collection.get el.data('trail_id')
-        model.destroy()
 
-    loadStorage: ->
-        @collection.fetch({
-            data: {
-                id: [17, 23, 24]
-            }
-        })
+	addToStorage: (model) ->
+		@storage.add model.get('id')
 
-    addAll: (models) ->
-        if models.each
-            models.each @addOne.bind(@)
-        else
-            @addOne(models)
+	removeFromStorage: (model) ->
+		@storage.remove model.get('id')
 
-    addOne: (model) ->
-        data = model.toJSON()
-        data.color = 'red'
-        @list.append(@template(data))
+	fetchStoredCollection: ->
+		if @storage.itens.length
+			@collection.fetch
+				data: id: @storage.itens
+
+
+	onSync: (models) ->
+		if models.each
+			models.each @addOne.bind(@)
+		else
+			@addOne(models)
+
+	addOne: (model) ->
+		data = model.toJSON()
+		data.color = 'red'
+		@list.append(@template(data))
 
 

@@ -30,7 +30,9 @@ class Model_Trail extends \Orm\Model
 		{
 			if (!isset($where))
 			{
-				$where = array('id', $id);
+				$where = array(
+					array('id', $id)
+				);
 			}
 			else
 			{

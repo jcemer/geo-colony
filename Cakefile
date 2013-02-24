@@ -27,6 +27,7 @@ task 'build:js', ->
 		'assets/js/vendor/underscore.js'
 		'assets/js/vendor/backbone.js'
 		'assets/js/app.coffee'
+		'assets/js/storage.coffee'
 		'assets/js/models.coffee'
 		'assets/js/views/search-trail.coffee'
 		'assets/js/views/colony-trails-select.coffee'

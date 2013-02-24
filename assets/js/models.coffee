@@ -6,7 +6,6 @@ App.Collection.Trails = Backbone.Collection.extend
     url: 'api/trails'
     model: App.Model.Trail
 
-
 App.Model.ColonyTrail = Backbone.Model.extend
     url: ''
 App.Collection.ColonyTrails = Backbone.Collection.extend
