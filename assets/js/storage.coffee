@@ -21,3 +21,7 @@ class App.Storage
 		@itens.splice(index, 1) if index isnt -1
 		@save()
 
+	reset: ->
+		@itens = []
+		@save()
+

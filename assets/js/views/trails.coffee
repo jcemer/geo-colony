@@ -5,17 +5,19 @@ class App.View.Trails extends Backbone.View
 
 	initialize: ->
 		@collection = new App.Collection.Trails
-		@collection.bind 'sync', @onSync.bind(@)
+		@collection.bind 'sync', @addAll.bind(@)
 
-		# add / remove
+		# add / remove / destroy
 		@list = @$('.trails-list')
 		App.on 'addTrail', @onAddTrail.bind(@)
-		@list.on 'click', '.remove-link', @onRemoveTrail.bind(@)
+		@$el.on 'click', '.remove-link', @onRemoveTrail.bind(@)
+		@$el.on 'click', '.reset-trails-button', @onResetTrails.bind(@)
 		
 		# storage
 		@storage = new App.Storage('trails')
 		@collection.bind 'add',    @addToStorage.bind(@)
 		@collection.bind 'remove', @removeFromStorage.bind(@)
+		@collection.bind 'reset',  @resetStorage.bind(@)
 		@fetchStoredCollection()
 
 	onAddTrail: (id) ->
@@ -30,6 +32,10 @@ class App.View.Trails extends Backbone.View
 		model = @collection.get el.data('trail_id')
 		@collection.remove(model)
 
+	onResetTrails: ->
+		@collection.reset()
+		@list.html('')
+
 
 	addToStorage: (model) ->
 		@storage.add model.get('id')
@@ -37,13 +43,16 @@ class App.View.Trails extends Backbone.View
 	removeFromStorage: (model) ->
 		@storage.remove model.get('id')
 
+	resetStorage: (model) ->
+		@storage.reset()
+
 	fetchStoredCollection: ->
 		if @storage.itens.length
 			@collection.fetch
 				data: id: @storage.itens
 
 
-	onSync: (models) ->
+	addAll: (models) ->
 		if models.each
 			models.each @addOne.bind(@)
 		else

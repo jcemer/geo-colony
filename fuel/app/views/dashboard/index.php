@@ -13,7 +13,7 @@
 		</script>
 		<ul class="trails-list"></ul>
 		<div class="buttons">
-			<a href="#" class="trails-clean-button button">limpar</a>
+			<button type="button" class="reset-trails-button button">limpar</button>
 		</div>
 	</div>
 	
