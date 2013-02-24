@@ -13,12 +13,14 @@ class App.View.Trails extends Backbone.View
 		@$el.on 'click', '.remove-link', @onRemoveTrail.bind(@)
 		@$el.on 'click', '.reset-trails-button', @onResetTrails.bind(@)
 		
+		@collection.bind 'all', @isEmpty.bind(@)
+
 		# storage
 		@storage = new App.Storage('trails')
 		@collection.bind 'add',    @addToStorage.bind(@)
 		@collection.bind 'remove', @removeFromStorage.bind(@)
 		@collection.bind 'reset',  @resetStorage.bind(@)
-		@fetchStoredCollection()
+		@fetchStored()
 
 	onAddTrail: (id) ->
 		model = new App.Model.Trail id: id
@@ -34,7 +36,10 @@ class App.View.Trails extends Backbone.View
 
 	onResetTrails: ->
 		@collection.reset()
-		@list.html('')
+		@list.empty()
+
+	isEmpty: ->
+		@$el.toggleClass('empty', !@collection.size())
 
 
 	addToStorage: (model) ->
@@ -43,14 +48,15 @@ class App.View.Trails extends Backbone.View
 	removeFromStorage: (model) ->
 		@storage.remove model.get('id')
 
-	resetStorage: (model) ->
+	resetStorage: (collection) ->
 		@storage.reset()
+		collection.each @addToStorage.bind(@)
 
-	fetchStoredCollection: ->
+	fetchStored: ->
 		if @storage.itens.length
 			@collection.fetch
+				update: true
 				data: id: @storage.itens
-
 
 	addAll: (models) ->
 		if models.each

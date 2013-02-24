@@ -4,7 +4,7 @@
 		<h2 class="title">Mapa das colônias <b>italianas</b> e <b>alemãs</b> no <b>Rio Grande do Sul</b></h2>
 	</header>
 	
-	<div id="trails">
+	<div id="trails" class="empty">
 		<script type="text/html" id="trails-list-template">
 			<li class="trail" data-trail_id="<%= id %>" style="background-color: <%= color %>">
 				<span class="label"><%= name %></span>
