@@ -4,16 +4,17 @@ class App.View.Trails extends Backbone.View
 	template: _.template($('#trails-list-template').html())
 
 	initialize: ->
+		@colors = new App.Colors
+
 		@collection = new App.Collection.Trails
 		@collection.bind 'sync', @addAll.bind(@)
+		@collection.bind 'all',  @checkEmpty.bind(@)
 
 		# add / remove / destroy
 		@list = @$('.trails-list')
 		App.on 'addTrail', @onAddTrail.bind(@)
 		@$el.on 'click', '.remove-link', @onRemoveTrail.bind(@)
 		@$el.on 'click', '.reset-trails-button', @onResetTrails.bind(@)
-		
-		@collection.bind 'all', @isEmpty.bind(@)
 
 		# storage
 		@storage = new App.Storage('trails')
@@ -38,7 +39,7 @@ class App.View.Trails extends Backbone.View
 		@collection.reset()
 		@list.empty()
 
-	isEmpty: ->
+	checkEmpty: ->
 		@$el.toggleClass('empty', !@collection.size())
 
 
@@ -66,7 +67,7 @@ class App.View.Trails extends Backbone.View
 
 	addOne: (model) ->
 		data = model.toJSON()
-		data.color = 'red'
+		data.color = @colors.get()
 		@list.append(@template(data))
 
 
