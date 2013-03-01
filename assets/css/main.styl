@@ -76,13 +76,18 @@ a
         absolute: bottom 10px left 15px
         font-size: 11px
 
+@keyframes appear {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
 
 .trails-list
     font-size: 11px
     margin-bottom: 5px
-    li
+    .trail
         cursor: pointer
         position: relative
+        animation: appear .5s 1
         background: url('../img/colonies-list.png') no-repeat
         &:hover
             background-position: 0 -40px
