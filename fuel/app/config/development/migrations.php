@@ -24,6 +24,7 @@ return array(
 				15 => '016_create_plots',
 				16 => '017_create_plot_coordinates',
 				17 => '018_create_plot_landholders',
+				18 => '019_add_index',
 			),
 		),
 		'module' => 
