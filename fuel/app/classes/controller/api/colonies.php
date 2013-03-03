@@ -21,15 +21,15 @@ class Controller_Api_Colonies extends Controller_Rest
         return $this->response($data);
     }
 
-    public function get_related()
+    public function get_trails()
     {
         $main_data = Model_Colony::find($this->param('id'), array(
-            'related' => $this->param('related')
+            'related' => 'trails'
         ));
 
         // filter fields
         $data = array();
-        foreach ($main_data[$this->param('related')] as $related)
+        foreach ($main_data['trails'] as $related)
         {
             $data[] = array(
                 'id'        => $related['id'],
