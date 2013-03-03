@@ -1,10 +1,6 @@
 App = window.App
 
-new App.View.Trails el: $('#trails')
-new App.View.SearchTrail el: $('#search-trail')
-
-
-
+new App.View.Main el: $('body')
 
 
 # TODO: refactor
@@ -15,8 +11,8 @@ sidebar.on 'click', '.panel .header', ->
 	$(this).closest('.panel').toggleClass('open')
 
 options =
-	center: new google.maps.LatLng(-34.397, 150.644)
-	zoom: 8
+	center: new google.maps.LatLng(-30.391830328088137, -52.767333984375)
+	zoom: 7
 	mapTypeId: google.maps.MapTypeId.ROADMAP
 
-map = new google.maps.Map document.getElementById('map'), options
+map = new google.maps.Map $('#map')[0], options

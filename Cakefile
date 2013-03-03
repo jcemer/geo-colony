@@ -30,10 +30,11 @@ task 'build:js', ->
 		'assets/js/storage.coffee'
 		'assets/js/colors.coffee'
 		'assets/js/models.coffee'
+		'assets/js/views/main.coffee'
+		'assets/js/views/trails.coffee'
 		'assets/js/views/search-trail.coffee'
 		'assets/js/views/colony-trails-select.coffee'
 		'assets/js/views/colony-trail-option.coffee'
-		'assets/js/views/trails.coffee'
 		'assets/js/init.coffee'
 	], 'public/assets/js/main.js'
 
