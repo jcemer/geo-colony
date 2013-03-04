@@ -23,21 +23,18 @@ class Controller_Api_Colonies extends Controller_Rest
 
     public function get_trails()
     {
-        $main_data = Model_Colony::find($this->param('id'), array(
-            'related' => 'trails'
+        $data = Model_Colony::find($this->param('id'), array(
+            'related' => array(
+                'trails' => array(
+                    'select' => array('id', 'name', 'colony_id')
+                )
+            )
         ));
-
-        // filter fields
-        $data = array();
-        foreach ($main_data['trails'] as $related)
-        {
-            $data[] = array(
-                'id'        => $related['id'],
-                'name'      => $related['name'],
-                'colony_id' => $related['colony_id']
-            );
+        if (!empty($data['trails'])) {
+            $data = array_values($data['trails']);
+        } else {
+            $data = array();
         }
-
         return $this->response($data);
     }
 }
