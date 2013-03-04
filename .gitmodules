@@ -3,7 +3,7 @@
 	url = git://github.com/fuel/core.git
 [submodule "fuel/packages/orm"]
 	path = fuel/packages/orm
-	url = git://github.com/fuel/orm.git
+	url = git://github.com/jcemer/fuel_orm.git
 [submodule "fuel/packages/auth"]
 	path = fuel/packages/auth
 	url = git://github.com/fuel/auth.git
