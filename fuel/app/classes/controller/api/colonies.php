@@ -10,8 +10,6 @@ class Controller_Api_Colonies extends Controller_Rest
             'order_by' => 'name'
         );
         $data = Model_Colony::find('all', $options);
-        $data = array_values($data);
-
         return $this->response($data);
     }
 
@@ -30,11 +28,7 @@ class Controller_Api_Colonies extends Controller_Rest
                 )
             )
         ));
-        if (!empty($data['trails'])) {
-            $data = array_values($data['trails']);
-        } else {
-            $data = array();
-        }
+        $data = !empty($data['trails']) ? $data['trails'] : array();
         return $this->response($data);
     }
 }

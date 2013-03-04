@@ -36,11 +36,11 @@ class App.View.Trails extends Backbone.View
 
 	onSync: (models) ->
 		if models.each
-			models.each @addOne.bind(@)
+			models.each @onSyncModel.bind(@)
 		else
-			@addOne(models)
+			@onSyncModel models
 
-	addOne: (model) ->
+	onSyncModel: (model) ->
 		data = model.toJSON()
 		@list.append @template(data)
 

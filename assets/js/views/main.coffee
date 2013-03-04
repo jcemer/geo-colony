@@ -3,7 +3,7 @@ App = window.App
 class App.View.Main extends Backbone.View
 
 	initialize: ->
-		@colors = new App.Colors
+		@colors = new App.utils.Colors
 
 		@collection = new App.Collection.Trails
 		@collection.bind 'add', @onAdd.bind(@)
@@ -13,7 +13,8 @@ class App.View.Main extends Backbone.View
 		App.on 'resetTrails', @resetTrails.bind(@)
 
 		# sub views
-		@trails       = new App.View.Trails el: @$('#trails'), collection: @collection
+		@map          = new App.View.Map         el: @$('#map'),    collection: @collection
+		@trails       = new App.View.Trails      el: @$('#trails'), collection: @collection
 		@searchTrails = new App.View.SearchTrail el: @$('#search-trail')
 		
 		# storage
@@ -24,7 +25,6 @@ class App.View.Main extends Backbone.View
 		@fetchStored()
 
 	onAdd: (model) ->
-		console.log model
 		model.set 'color', @colors.get()
 
 	addTrail: (id) ->

@@ -13,6 +13,7 @@ class Model_Trail extends \Orm\Model
 	);
 
 	protected static $_belongs_to = array('colony');
+	protected static $_has_many = array('plots');
 
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(
