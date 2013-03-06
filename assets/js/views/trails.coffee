@@ -9,13 +9,17 @@ class App.View.Trails extends Backbone.View
 		@collection.bind 'remove', @onRemoveTrail.bind(@)
 		@collection.bind 'all',    @checkEmpty.bind(@)
 
-		# add / remove / destroy
 		@list = @$('.trails-list')
+		@$el.on 'click', '.trail',               @focusTrail.bind(@)
 		@$el.on 'click', '.remove-link',         @removeTrail.bind(@)
 		@$el.on 'click', '.reset-trails-button', @resetTrails.bind(@)
 
+	focusTrail: (event) ->
+		el = $(event.currentTarget)
+		App.trigger 'focusTrail', el.data('trail_id')
+
 	removeTrail: (event) ->
-		link = $(event.target)
+		link = $(event.currentTarget)
 		el = link.closest('.trail')
 		App.trigger 'removeTrail', el.data('trail_id')
 
