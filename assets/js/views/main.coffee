@@ -14,8 +14,13 @@ class App.View.Main extends Backbone.View
 
 		# sub views
 		@map          = new App.View.Map         el: @$('#map'),    collection: @collection
+		@map.render()
+
 		@trails       = new App.View.Trails      el: @$('#trails'), collection: @collection
+		@trails.render()
+
 		@searchTrails = new App.View.SearchTrail el: @$('#search-trail')
+		@searchTrails.render()
 		
 		# storage
 		@storage = new App.Storage('trails')

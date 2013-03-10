@@ -4,37 +4,25 @@ class App.View.Map extends Backbone.View
 
 	initialize: ->
 		@collection.bind 'sync',   @onSync
-		@collection.bind 'remove', @onRemoveTrail
+		@collection.bind 'remove', @removeTrail
 
 		App.on 'focusTrail',       @onFocusTrail
 
+	render: ->
 		@map = new google.maps.Map @el, 
 			center: new google.maps.LatLng(-30.391830328088137, -52.767333984375)
 			zoom: 9#7
-			mapTypeId: google.maps.MapTypeId.ROADMAP		
+			mapTypeId: google.maps.MapTypeId.ROADMAP
 
 	onFocusTrail: (id) =>
 		# console.log @collection.get(id)
 
-	onRemoveTrail: (model, a, b) =>
-		_.each model.get('mapPlots'), (plot) ->
-			plot.setMap(null)
-
-	onClickPlot: (model) =>
-		console.log model.id
+	removeTrail: (model) =>
+		model.unset('plots')
 
 	addPlot: (model) =>
-		color = model.get('livesIn').get('color')
-		paths = App.utils.coordsToLatLng(model.get('plot_coordinates'))
-		polygon = new google.maps.Polygon
-			paths: paths,
-			fillColor: color
-			strokeColor: color
-			strokeWeight: 1
-		
-		model.set('polygon', polygon)
-		google.maps.event.addListener polygon, 'click', _.partial @onClickPlot, model
-		polygon.setMap @map
+		plot = new App.View.MapPlot map: @map, model: model
+		plot.render()
 
 	onSync: (models) =>
 		if models.each
@@ -44,4 +32,3 @@ class App.View.Map extends Backbone.View
 
 	onSyncModel: (model) =>
 		model.get('plots').each @addPlot
-		# model.set 'plots', plots
