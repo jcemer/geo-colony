@@ -13,10 +13,10 @@ class App.View.SearchTrail extends Backbone.View
 			el: @trail
 			collection: new App.Collection.ColonyTrails
 
-		@colony.on 'change', @onChangeSelectedColony.bind(@)
-		@button.on 'click',  @onUseButton.bind(@)
+		@colony.on 'change', @onChangeSelectedColony
+		@button.on 'click',  @onUseButton
 
-	onChangeSelectedColony: ->
+	onChangeSelectedColony: =>
 		colony_id = @colony.val()
 		if colony_id is '-'
 			@trailsView.collection.reset()
@@ -24,11 +24,11 @@ class App.View.SearchTrail extends Backbone.View
 			@trailsView.collection.url = 'api/colonies/' + colony_id + '/trails'
 			@trailsView.collection.fetch()
 
-	onUseButton: ->
+	onUseButton: =>
 		trail_id = @trail.val()
 		unless trail_id is '-' or @button.attr('disabled')
 			App.trigger 'addTrail', trail_id
 
-	onDisabled: (event, data) ->
+	onDisabled: (event, data) =>
 		@button.attr('disabled', data)
 

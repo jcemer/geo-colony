@@ -4,47 +4,47 @@ class App.View.Trails extends Backbone.View
 	template: _.template($('#trails-list-template').html())
 
 	initialize: ->
-		@collection.bind 'sync',   @onSync.bind(@)
-		@collection.bind 'reset',  @onResetTrails.bind(@)
-		@collection.bind 'remove', @onRemoveTrail.bind(@)
-		@collection.bind 'all',    @checkEmpty.bind(@)
+		@collection.bind 'sync',   @onSync
+		@collection.bind 'reset',  @onResetTrails
+		@collection.bind 'remove', @onRemoveTrail
+		@collection.bind 'all',    @checkEmpty
 
 		@list = @$('.trails-list')
-		@$el.on 'click', '.trail',               @focusTrail.bind(@)
-		@$el.on 'click', '.remove-link',         @removeTrail.bind(@)
-		@$el.on 'click', '.reset-trails-button', @resetTrails.bind(@)
+		@$el.on 'click', '.trail',               @focusTrail
+		@$el.on 'click', '.remove-link',         @removeTrail
+		@$el.on 'click', '.reset-trails-button', @resetTrails
 
-	focusTrail: (event) ->
+	focusTrail: (event) =>
 		el = $(event.currentTarget)
 		App.trigger 'focusTrail', el.data('trail_id')
 
-	removeTrail: (event) ->
+	removeTrail: (event) =>
 		link = $(event.currentTarget)
 		el = link.closest('.trail')
 		App.trigger 'removeTrail', el.data('trail_id')
 
-	resetTrails: ->
+	resetTrails: =>
 		App.trigger 'resetTrails'
 
 
-	onResetTrails: ->
+	onResetTrails: =>
 		@list.empty()
 
-	onRemoveTrail: (model) ->
-		id = model.get('id')
+	onRemoveTrail: (model) =>
+		id = model.id
 		@list.find("[data-trail_id=#{id}]").remove()
 
 
-	checkEmpty: ->
+	checkEmpty: =>
 		@$el.toggleClass('empty', !@collection.size())
 
-	onSync: (models) ->
+	onSync: (models) =>
 		if models.each
-			models.each @onSyncModel.bind(@)
+			models.each @onSyncModel
 		else
 			@onSyncModel models
 
-	onSyncModel: (model) ->
+	onSyncModel: (model) =>
 		data = model.toJSON()
 		@list.append @template(data)
 

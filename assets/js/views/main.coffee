@@ -6,11 +6,11 @@ class App.View.Main extends Backbone.View
 		@colors = new App.utils.Colors
 
 		@collection = new App.Collection.Trails
-		@collection.bind 'add', @onAdd.bind(@)
+		@collection.bind 'add', @onAddModel
 
-		App.on 'addTrail',    @addTrail.bind(@)
-		App.on 'removeTrail', @removeTrail.bind(@)
-		App.on 'resetTrails', @resetTrails.bind(@)
+		App.on 'addTrail',    @addTrail
+		App.on 'removeTrail', @removeTrail
+		App.on 'resetTrails', @resetTrails
 
 		# sub views
 		@map          = new App.View.Map         el: @$('#map'),    collection: @collection
@@ -19,38 +19,38 @@ class App.View.Main extends Backbone.View
 		
 		# storage
 		@storage = new App.Storage('trails')
-		@collection.bind 'add',    @addToStorage.bind(@)
-		@collection.bind 'remove', @removeFromStorage.bind(@)
-		@collection.bind 'reset',  @resetStorage.bind(@)
+		@collection.bind 'add',    @addToStorage
+		@collection.bind 'remove', @removeFromStorage
+		@collection.bind 'reset',  @resetStorage
 		@fetchStored()
 
-	onAdd: (model) ->
+	onAddModel: (model) =>
 		model.set 'color', @colors.get()
 
-	addTrail: (id) ->
+	addTrail: (id) =>
 		model = new App.Model.Trail id: id
 		model.fetch()
 		@collection.add model
 
-	removeTrail: (id) ->
+	removeTrail: (id) =>
 		model = @collection.get id
 		@collection.remove model
 
-	resetTrails: ->
+	resetTrails: =>
 		@collection.reset()
 
 
-	addToStorage: (model) ->
-		@storage.add model.get('id')
+	addToStorage: (model) =>
+		@storage.add model.id
 
-	removeFromStorage: (model) ->
-		@storage.remove model.get('id')
+	removeFromStorage: (model) =>
+		@storage.remove model.id
 
-	resetStorage: (collection) ->
+	resetStorage: (collection) =>
 		@storage.reset()
-		collection.each @addToStorage.bind(@)
+		collection.each @addToStorage
 
-	fetchStored: ->
+	fetchStored: =>
 		if @storage.itens.length
 			@collection.fetch
 				update: true
