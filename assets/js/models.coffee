@@ -11,7 +11,6 @@ App.Model.Trail = Backbone.RelationalModel.extend
         collectionType: 'Collection.Plots',
         reverseRelation:
             key: 'livesIn'
-            includeInJSON: 'id'
     ]
 
 App.Collection.Trails = Backbone.Collection.extend
