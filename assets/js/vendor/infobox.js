@@ -1,6 +1,6 @@
 /**
  * @name InfoBox
- * @version 1.1.9 [October 2, 2011]
+ * @version 1.1.10 [March 11, 2013]
  * @author Gary Little (inspired by proof-of-concept code from Pamela Fox of Google)
  * @copyright Copyright 2010 Gary Little [gary at luxcentral.com]
  * @fileoverview InfoBox extends the Google Maps JavaScript API V3 <tt>OverlayView</tt> class.
@@ -56,11 +56,6 @@
  *  be defined in the <code>boxClass</code> style sheet. If this property is changed after the
  *  InfoBox has been created, all previously set styles (except those defined in the style sheet)
  *  are removed from the InfoBox before the new style values are applied.
- * @property {string} closeBoxMargin The CSS margin style value for the close box.
- *  The default is "2px" (a 2-pixel margin on all sides).
- * @property {string} closeBoxURL The URL of the image representing the close box.
- *  Note: The default is the URL for Google's standard close box.
- *  Set this property to "" if no close box is required.
  * @property {Size} infoBoxClearance Minimum offset (in pixels) from the InfoBox to the
  *  map edge after an auto-pan.
  * @property {boolean} isHidden Hide the InfoBox on <tt>open</tt> (default is <tt>false</tt>).
@@ -101,11 +96,7 @@ function InfoBox(opt_opts) {
   //
   this.boxClass_ = opt_opts.boxClass || "infoBox";
   this.boxStyle_ = opt_opts.boxStyle || {};
-  this.closeBoxMargin_ = opt_opts.closeBoxMargin || "2px";
-  this.closeBoxURL_ = opt_opts.closeBoxURL || "http://www.google.com/intl/en_us/mapfiles/close.gif";
-  if (opt_opts.closeBoxURL === "") {
-    this.closeBoxURL_ = "";
-  }
+  this.closeBoxLabel_ = opt_opts.closeBoxLabel || "Close";
   this.infoBoxClearance_ = opt_opts.infoBoxClearance || new google.maps.Size(1, 1);
   this.isHidden_ = opt_opts.isHidden || false;
   this.alignBottom_ = opt_opts.alignBottom || false;
@@ -171,9 +162,9 @@ InfoBox.prototype.createInfoBoxDiv_ = function () {
     this.setBoxStyle_();
 
     if (typeof this.content_.nodeType === "undefined") {
-      this.div_.innerHTML = this.getCloseBoxImg_() + this.content_;
+      this.div_.innerHTML = this.getCloseBoxHtml_() + this.content_;
     } else {
-      this.div_.innerHTML = this.getCloseBoxImg_();
+      this.div_.innerHTML = this.getCloseBoxHtml_();
       this.div_.appendChild(this.content_);
     }
 
@@ -229,26 +220,11 @@ InfoBox.prototype.createInfoBoxDiv_ = function () {
 };
 
 /**
- * Returns the HTML <IMG> tag for the close box.
+ * Returns the HTML tag for the close box.
  * @private
  */
-InfoBox.prototype.getCloseBoxImg_ = function () {
-
-  var img = "";
-
-  if (this.closeBoxURL_ !== "") {
-
-    img  = "<img";
-    img += " src='" + this.closeBoxURL_ + "'";
-    img += " align=right"; // Do this because Opera chokes on style='float: right;'
-    img += " style='";
-    img += " position: relative;"; // Required by MSIE
-    img += " cursor: pointer;";
-    img += " margin: " + this.closeBoxMargin_ + ";";
-    img += "'>";
-  }
-
-  return img;
+InfoBox.prototype.getCloseBoxHtml_ = function () {
+  return "<button type='button' class='close' title='" + this.closeBoxLabel_ + "'>" + this.closeBoxLabel_ + "</button>";
 };
 
 /**
@@ -256,18 +232,8 @@ InfoBox.prototype.getCloseBoxImg_ = function () {
  * @private
  */
 InfoBox.prototype.addClickHandler_ = function () {
-
-  var closeBox;
-
-  if (this.closeBoxURL_ !== "") {
-
-    closeBox = this.div_.firstChild;
-    this.closeListener_ = google.maps.event.addDomListener(closeBox, 'click', this.getCloseClickHandler_());
-
-  } else {
-
-    this.closeListener_ = null;
-  }
+  closeBox = this.div_.firstChild;
+  this.closeListener_ = google.maps.event.addDomListener(closeBox, 'click', this.getCloseClickHandler_());
 };
 
 /**
@@ -488,10 +454,9 @@ InfoBox.prototype.draw = function () {
 };
 
 /**
- * Sets the options for the InfoBox. Note that changes to the <tt>maxWidth</tt>,
- *  <tt>closeBoxMargin</tt>, <tt>closeBoxURL</tt>, and <tt>enableEventPropagation</tt>
- *  properties have no affect until the current InfoBox is <tt>close</tt>d and a new one
- *  is <tt>open</tt>ed.
+ * Sets the options for the InfoBox. Note that changes to the <tt>maxWidth</tt>
+ *  and <tt>enableEventPropagation</tt> properties have no affect until the current InfoBox 
+ *  is <tt>close</tt>d and a new one is <tt>open</tt>ed.
  * @param {InfoBoxOptions} opt_opts
  */
 InfoBox.prototype.setOptions = function (opt_opts) {
@@ -533,13 +498,9 @@ InfoBox.prototype.setOptions = function (opt_opts) {
 
     this.setZIndex(opt_opts.zIndex);
   }
-  if (typeof opt_opts.closeBoxMargin !== "undefined") {
+  if (typeof opt_opts.closeBoxLabel !== "undefined") {
 
-    this.closeBoxMargin_ = opt_opts.closeBoxMargin;
-  }
-  if (typeof opt_opts.closeBoxURL !== "undefined") {
-
-    this.closeBoxURL_ = opt_opts.closeBoxURL;
+    this.closeBoxLabel_ = opt_opts.closeBoxLabel;
   }
   if (typeof opt_opts.infoBoxClearance !== "undefined") {
 
@@ -584,9 +545,9 @@ InfoBox.prototype.setContent = function (content) {
     }
 
     if (typeof content.nodeType === "undefined") {
-      this.div_.innerHTML = this.getCloseBoxImg_() + content;
+      this.div_.innerHTML = this.getCloseBoxHtml_() + content;
     } else {
-      this.div_.innerHTML = this.getCloseBoxImg_();
+      this.div_.innerHTML = this.getCloseBoxHtml_();
       this.div_.appendChild(content);
     }
 
@@ -596,9 +557,9 @@ InfoBox.prototype.setContent = function (content) {
     if (!this.fixedWidthSet_) {
       this.div_.style.width = this.div_.offsetWidth + "px";
       if (typeof content.nodeType === "undefined") {
-        this.div_.innerHTML = this.getCloseBoxImg_() + content;
+        this.div_.innerHTML = this.getCloseBoxHtml_() + content;
       } else {
-        this.div_.innerHTML = this.getCloseBoxImg_();
+        this.div_.innerHTML = this.getCloseBoxHtml_();
         this.div_.appendChild(content);
       }
     }
