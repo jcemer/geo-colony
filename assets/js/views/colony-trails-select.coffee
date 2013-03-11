@@ -2,17 +2,17 @@ App = window.App
 
 class App.View.ColonyTrailsSelect extends Backbone.View
     initialize: ->
-        @collection?.bind 'sync', @addAll
+        @collection?.bind 'sync', @onSync
     
-    addOne: (model) ->
+    onSyncModel: (model) =>
         view = new App.View.ColonyTrailOption model: model
         @views.push view
         @$el.append view.render().el
     
-    addAll: =>
+    onSync: =>
         _.each(@views, (view) -> view.remove())
         @views = []
-        @collection.each @addOne.bind(@)
+        @collection.each @onSyncModel
 
         disabled = @$el.children().length <= 1
         @$el.attr('disabled', disabled)

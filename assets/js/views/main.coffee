@@ -6,17 +6,17 @@ class App.View.Main extends Backbone.View
 		@colors = new App.utils.Colors
 
 		@collection = new App.Collection.Trails
-		@collection.bind 'add', @onAddModel
+		@collection.bind 'add', @onAddTrail
 
 		App.on 'addTrail',    @addTrail
 		App.on 'removeTrail', @removeTrail
 		App.on 'resetTrails', @resetTrails
 
 		# sub views
-		@map          = new App.View.Map         el: @$('#map'),    collection: @collection
+		@map = new App.View.Map el: @$('#map'), collection: @collection
 		@map.render()
 
-		@trails       = new App.View.Trails      el: @$('#trails'), collection: @collection
+		@trails = new App.View.Trails el: @$('#trails'), collection: @collection
 		@trails.render()
 
 		@searchTrails = new App.View.SearchTrail el: @$('#search-trail')
@@ -29,9 +29,14 @@ class App.View.Main extends Backbone.View
 		@collection.bind 'reset',  @resetStorage
 		@fetchStored()
 
-	onAddModel: (model) =>
+	# Trails
+	#
+	onAddTrail: (model) =>
 		model.set 'color', @colors.get()
 
+
+	# Global events to trails
+	#
 	addTrail: (id) =>
 		model = new App.Model.Trail id: id
 		model.fetch()
@@ -44,7 +49,8 @@ class App.View.Main extends Backbone.View
 	resetTrails: =>
 		@collection.reset()
 
-
+	# Storage
+	#
 	addToStorage: (model) =>
 		@storage.add model.id
 

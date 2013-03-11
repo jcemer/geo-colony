@@ -3,10 +3,14 @@ App = window.App
 class App.View.Map extends Backbone.View
 
 	initialize: ->
-		@collection.bind 'sync',   @onSync
-		@collection.bind 'remove', @removeTrail
+		@collection.bind 'sync',   @onSyncTrails
+		@collection.bind 'change', @onChangeTrails
+		@collection.bind 'reset',  @onResetTrails
+		@collection.bind 'remove', @onRemoveTrail
 
-		App.on 'focusTrail',       @onFocusTrail
+		App.on 'focusTrail',       @focusTrail
+		App.on 'openInfoWindow',   @openInfoWindow
+		App.on 'closeInfoWindow',  @closeInfoWindow
 
 	render: ->
 		@map = new google.maps.Map @el, 
@@ -14,21 +18,52 @@ class App.View.Map extends Backbone.View
 			zoom: 9#7
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 
-	onFocusTrail: (id) =>
-		# console.log @collection.get(id)
+		google.maps.event.addListener @map, 'click', @onMapClick
 
-	removeTrail: (model) =>
+	focusTrail: (id) =>
+		# console.log @collection.get(id)
+	
+	# Map
+	# 
+	onMapClick: =>
+		@closeInfoWindow()
+
+
+	# Info Window
+	# 
+	closeInfoWindow: =>
+		@infoWindow?.close()
+
+	openInfoWindow: (content, position) =>
+		@closeInfoWindow()
+		@infoWindow = new google.maps.InfoWindow
+			content: content
+			position: position
+		@infoWindow.open @map
+
+	# Colection
+	# 
+	onChangeTrails: =>
+		@closeInfoWindow()
+
+	onRemoveTrail: (model) =>
 		model.unset('plots')
+	
+	onResetTrails: (c, collection) =>
+		@closeInfoWindow()
+		_.each collection.previousModels, @onRemoveTrail
+
+	onSyncTrails: (models) =>
+		if models.each
+			models.each @onSyncModelTrail
+		else
+			@onSyncModelTrail models
+
+	onSyncModelTrail: (model) =>
+		model.get('plots').each @addPlot
 
 	addPlot: (model) =>
 		plot = new App.View.MapPlot map: @map, model: model
 		plot.render()
 
-	onSync: (models) =>
-		if models.each
-			models.each @onSyncModel
-		else
-			@onSyncModel models
-
-	onSyncModel: (model) =>
-		model.get('plots').each @addPlot
+	
