@@ -25,6 +25,20 @@ class App.View.MapPlot extends Backbone.View
 		@remove()
 
 	onClick: (event) =>
-		App.trigger 'openInfoWindow', @model.id, event.latLng
+		content = """Dados Históricos
+
+Número: 56
+Colônia: Antônio Prado
+Linha: 2 de Julho
+Núcleo: -
+Secção: -
+Lado/Ala: -
+
+Dados de Geoprocessamento
+
+Área (real): 268.094 m2
+Cidade atual (mais próxima): Novo Treviso
+Elevação média (aproximada): 657 m"""
+		App.trigger 'openInfoWindow', content.replace(/\n/g, '<br>'), event.latLng
 
 		

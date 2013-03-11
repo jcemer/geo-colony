@@ -36,9 +36,16 @@ class App.View.Map extends Backbone.View
 
 	openInfoWindow: (content, position) =>
 		@closeInfoWindow()
-		@infoWindow = new google.maps.InfoWindow
+		@infoWindow = new InfoBox
 			content: content
 			position: position
+			alignBottom: true
+			pixelOffset: new google.maps.Size(0, -10)
+			boxClass: 'info-window'
+			closeBoxLabel: 'Fechar'
+			boxStyle:
+				width: '280px'
+
 		@infoWindow.open @map
 
 	# Colection
