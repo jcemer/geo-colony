@@ -6,6 +6,7 @@ class Controller_Api_Trails extends Controller_Rest
     private $trail_options = array(
         'related' => array(
             'plots' => array(
+                'select' => array('id'),
                 'related' => array(
                     'plot_coordinates' => array(
                         'select' => array('id', 'latitude', 'longitude')

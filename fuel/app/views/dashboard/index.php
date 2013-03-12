@@ -7,7 +7,11 @@
 	<div id="trails" class="empty">
 		<script type="text/html" id="trails-list-template">
 			<li class="trail" data-trail_id="<%= id %>" style="background-color: <%= color %>">
+				<% if(name) { %>
 				<span class="label"><%= name %></span>
+				<% } else { %>
+				<span class="label loading">carregando...</span>
+				<% } %>
 				<a href="#" class="remove-link" title="remover">remover</a>
 			</li>
 		</script>
