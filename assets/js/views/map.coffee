@@ -34,10 +34,10 @@ class App.View.Map extends Backbone.View
 	closeInfoWindow: =>
 		@infoWindow?.close()
 
-	openInfoWindow: (content, position) =>
+	openInfoWindow: (view, position) =>
 		@closeInfoWindow()
 		@infoWindow = new InfoBox
-			content: content
+			content: view.el
 			position: position
 			alignBottom: true
 			pixelOffset: new google.maps.Size(0, -10)
