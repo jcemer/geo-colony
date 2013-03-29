@@ -38,8 +38,8 @@ class App.View.Main extends Backbone.View
 	# Global events to trails
 	#
 	addTrail: (id) =>
-		model = new App.Model.Trail id: id
-		model.fetch()
+		model = App.Model.Trail.findOrCreate id: id
+		model.fetch() unless model.get("name")
 		@collection.add model
 
 	removeTrail: (id) =>

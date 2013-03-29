@@ -54,6 +54,7 @@ class App.View.Map extends Backbone.View
 		@closeInfoWindow()
 
 	onRemoveTrail: (model) =>
+		# hack to remove plots
 		model.unset('plots')
 	
 	onResetTrails: (c, collection) =>
