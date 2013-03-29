@@ -159,10 +159,48 @@ a
 	right: 0
 
 	.info-window
-		padding: 20px
-		// border: 1px solid #CCC
+		padding: 15px
 		background: white
 		box-shadow: 4px 4px 16px rgba(black, .14)
+		.nav 
+			height: 30px
+			overflow: hidden
+			absolute: left right
+			top: -30px
+			a
+				float: left
+				line-height: 28px
+				height: 30px
+				padding: 0 10px
+				margin-left: 8px
+				margin-top: 2px
+				text-decoration: none
+				color: #666
+				box-shadow: 4px 4px 10px rgba(black, .1)
+				background: rgba(#F9F9F9, .9)
+				&.active
+					background: white
+				&:hover
+					transition: all .1s ease-out
+					margin-top: 0
+					color: #333
+		.content
+			max-height: 1000px
+			overflow: auto
+			&.hide
+				display: none
+			.label
+				display: inline-block
+				overflow: hidden
+				position: relative
+				width: 200px
+
+
+		.title
+			font-weight: bold
+			margin: 15px 0 5px 0
+			&:first-child
+				margin-top: 0
 		.close
 			absolute: top 10px right 10px
 			width: 14px

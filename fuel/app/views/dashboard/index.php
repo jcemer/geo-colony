@@ -7,7 +7,7 @@
 	<div id="trails" class="empty">
 		<script type="text/html" id="trails-trail-template">
 			<li class="trail" data-trail_id="<%= data.id %>" style="background-color: <%= data.color %>">
-				<% if(data.name) { %>
+				<% if (data.name) { %>
 					<span class="label"><%= data.name %></span>
 				<% } else { %>
 					<span class="label loading">carregando...</span>
@@ -100,21 +100,49 @@
 
 
 <script type="text/html" id="map-plot-window-template">
-	<h1>Dados Históricos</h1>
-	<ul>
-		<li>Número: <%= data.number %></li>
-		<li>Colônia: <%= data.livesIn.colony.name %></li>
-		<li>Linha: <%= data.livesIn.name %></li>
-		<li>Núcleo: <%= data.nucleu && data.nucleu.name || '-' %></li>
-		<li>Secção: <%= data.section && data.section.name || '-' %></li>
-		<li>Lado/Ala: <%= data.edge && data.edge.name || '-' %></li>
+	<ul class="nav">
+		<li><a href="#plot-data" class="active">Lote</a></li>
+		<li><a href="#plot-landholder">Proprietário</a></li>
 	</ul>
 
-	<h1>Dados de Geoprocessamento</h1>
-	<ul>
-		<li>Área (real): <%= data.plot_landholders && data.plot_landholders.area || '-' %> m2</li>
-		<li>Cidade atual (mais próxima): <%= data.city && data.city.name || '-' %></li>
-		<li>Elevação média (aproximada): <%= data.elevation %> m</li>
-	</ul>
+	<div id="plot-data" class="content">
+		<h1 class="title">Dados Históricos</h1>
+		<ul>
+			<li><span class="label">Número:</span> <%= data.number %></li>
+			<li><span class="label">Colônia:</span> <%= data.livesIn.colony.name %></li>
+			<li><span class="label">Linha:</span> <%= data.livesIn.name %></li>
+			<li><span class="label">Núcleo:</span> <%= data.nucleu && data.nucleu.name || '-' %></li>
+			<li><span class="label">Secção:</span> <%= data.section && data.section.name || '-' %></li>
+			<li><span class="label">Lado/Ala:</span> <%= data.edge && data.edge.name || '-' %></li>
+		</ul>
+
+		<h1 class="title">Dados de Geoprocessamento</h1>
+		<ul>
+			<li><span class="label">Área (real):</span> <%= data.area || '-' %> m2</li>
+			<li><span class="label">Cidade atual (mais próxima):</span> <%= data.city && data.city.name || '-' %></li>
+			<li><span class="label">Elevação média (aproximada):</span> <%= data.elevation %> m</li>
+		</ul>
+	</div>
+
+	<div id="plot-landholder" class="content hide">
+		<% 
+			var len = data.plot_landholders && data.plot_landholders.length
+			if (len) {
+		%>
+			<% _.each(data.plot_landholders, function(data, i) { %>
+				<h1 class="title">Proprietário <%= len - i %></h1>
+				<ul>
+					<li><span class="label">Nome:</span> <%= data.landholder.name || '-' %></li>
+					<li><span class="label">Família:</span> <%= data.landholder.family || '-' %></li>
+					<li><span class="label">Ano de concessão do lote:</span> <%= data.granting || '-' %></li>
+					<li><span class="label">Ano de quitação do lote:</span> <%= data.release || '-' %></li>
+					<li><span class="label">Valor do lote:</span> $ <%= data.price || '-' %></li>
+					<li><span class="label">Área (informada):</span> <%= data.area || '-' %> m2</li>
+				</ul>
+			<% 	}) %>
+		<% } else { %>
+			Não foram encontradas informações a respeito dos proprietários.
+		<% } %>
+	</div>
 </script>
 <div id="map"></div>

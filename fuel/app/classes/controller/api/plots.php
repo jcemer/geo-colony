@@ -12,7 +12,10 @@ class Controller_Api_Plots extends Controller_Rest
                 'edge' => array('select' => array('id', 'name')),
                 'city' => array('select' => array('id', 'name')),
                 'plot_landholders' => array(
-                    'select' => array('id', 'area')
+                    'select' => array('id', 'granting', 'release', 'area', 'price'),
+                    'related' => array(
+                        'landholder' => array('select' => array('id', 'name')),
+                    )
                 ),
                 'plot_coordinates' => array(
                     'select' => array('id', 'latitude', 'longitude')
@@ -20,6 +23,10 @@ class Controller_Api_Plots extends Controller_Rest
             )
 
         ));
+
+        $data = Format::forge($data)->to_array();
+        $data["area"] = !empty($data["plot_landholders"][0]) ? $data["plot_landholders"][0]["area"] : '0';
+
         return $this->response($data);
     }
 }

@@ -41,10 +41,11 @@ class App.View.Map extends Backbone.View
 			position: position
 			alignBottom: true
 			pixelOffset: new google.maps.Size(0, -10)
+			infoBoxClearance: new google.maps.Size(0, 50)
 			boxClass: 'info-window'
 			closeBoxLabel: 'Fechar'
 			boxStyle:
-				width: '280px'
+				width: '350px'
 
 		@infoWindow.open @map
 
