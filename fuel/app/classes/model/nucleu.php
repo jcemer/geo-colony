@@ -1,6 +1,6 @@
 <?php
 
-class Model_Nucleus extends \Orm\Model
+class Model_Nucleu extends \Orm\Model
 {
 	protected static $_properties = array(
 		'id',
