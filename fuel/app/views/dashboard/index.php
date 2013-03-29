@@ -98,4 +98,23 @@
 	
 </div>
 
+
+<script type="text/html" id="map-plot-window-template">
+	<h1>Dados Históricos</h1>
+	<ul>
+		<li>Número: <%= data.number %></li>
+		<li>Colônia: <%= data.livesIn.colony.name %></li>
+		<li>Linha: <%= data.livesIn.name %></li>
+		<li>Núcleo: <%= data.nucleu && data.nucleu.name || '-' %></li>
+		<li>Secção: <%= data.section && data.section.name || '-' %></li>
+		<li>Lado/Ala: <%= data.edge && data.edge.name || '-' %></li>
+	</ul>
+
+	<h1>Dados de Geoprocessamento</h1>
+	<ul>
+		<li>Área (real): <%= data.plot_landholders && data.plot_landholders.area || '-' %> m2</li>
+		<li>Cidade atual (mais próxima): <%= data.city && data.city.name || '-' %></li>
+		<li>Elevação média (aproximada): <%= data.elevation %> m</li>
+	</ul>
+</script>
 <div id="map"></div>

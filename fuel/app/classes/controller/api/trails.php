@@ -12,7 +12,8 @@ class Controller_Api_Trails extends Controller_Rest
                         'select' => array('id', 'latitude', 'longitude')
                     )
                 )
-            )
+            ),
+            'colony' => array('select' => array('id', 'name'))
         )
     );
 

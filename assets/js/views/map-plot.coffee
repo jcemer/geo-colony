@@ -25,11 +25,10 @@ class App.View.MapPlot extends Backbone.View
 		@remove()
 
 	onClick: (event) =>
-		console.log @model
-		# @model.fetch()
 		@view = new App.View.MapPlotWindow model: @model
 		@view.render()
 		App.trigger 'openInfoWindow', @view, event.latLng
+		@model.fetch()
 
 
 

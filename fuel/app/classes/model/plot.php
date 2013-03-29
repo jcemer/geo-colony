@@ -17,7 +17,9 @@ class Model_Plot extends \Orm\Model
 		'approved_by'
 	);
 
-	protected static $_has_many = array('plot_coordinates', 'plot_landholders');
+	protected static $_belongs_to = array('city', 'nucleu', 'section', 'edge');
+	protected static $_has_many = array('plot_coordinates');
+	protected static $_has_one = array('plot_landholders');
 
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(

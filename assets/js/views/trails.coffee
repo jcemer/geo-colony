@@ -1,7 +1,7 @@
 App = window.App
 
 class App.View.Trails extends Backbone.View
-	template: _.template($('#trails-list-template').html())
+	template: _.template($('#trails-trail-template').html())
 
 	initialize: ->
 		@collection.bind 'add',    @onAddTrail
@@ -44,10 +44,10 @@ class App.View.Trails extends Backbone.View
 	# Collection
 	# 
 	onAddTrail: (model) =>
-		@list.append @template(model.toJSON())
+		@list.append @renderTrail(model)
 
 	onChangeTrail: (model) =>
-		@getTrail(model).replaceWith @template(model.toJSON())
+		@getTrail(model).replaceWith @renderTrail(model)
 
 	onResetTrails: =>
 		@list.empty()
