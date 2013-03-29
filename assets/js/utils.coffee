@@ -2,9 +2,32 @@ App = window.App
 App.utils = {}
 
 App.utils.coordsToLatLng = (array) ->
-    _.map array, (item) ->
-        new google.maps.LatLng item.latitude, item.longitude
+	_.map array, (item) ->
+		new google.maps.LatLng item.latitude, item.longitude
 
+App.utils.mapInitialConfigs = ->
+	center: new google.maps.LatLng(-30.391830328088137, -52.767333984375)
+	zoom: 7
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+
+App.utils.getMapZoomByBounds = (map, bounds) ->
+	max_zoom = map.mapTypes.get(map.getMapTypeId()).maxZoom or 21
+	min_zoom = map.mapTypes.get(map.getMapTypeId()).minZoom or 0
+	double_pad = 80
+
+	ne = map.getProjection().fromLatLngToPoint(bounds.getNorthEast())
+	sw = map.getProjection().fromLatLngToPoint(bounds.getSouthWest())
+
+	worldCoordWidth = Math.abs(ne.x - sw.x)
+	worldCoordHeight = Math.abs(ne.y - sw.y)
+
+	width = $(map.getDiv()).width()
+	height = $(map.getDiv()).height()
+
+	for zoom in [max_zoom..min_zoom]
+		return zoom if worldCoordWidth * (1 << zoom) + double_pad < width and 
+					   worldCoordHeight * (1 << zoom) + double_pad < height
+	return 0
 
 class App.utils.Colors
 	constructor: -> 

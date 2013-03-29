@@ -8,20 +8,28 @@ class App.View.Map extends Backbone.View
 		@collection.bind 'reset',  @onResetTrails
 		@collection.bind 'remove', @onRemoveTrail
 
-		App.on 'focusTrail',       @focusTrail
+		App.on 'zoomTrail',        @zoomTrail
 		App.on 'openInfoWindow',   @openInfoWindow
 		App.on 'closeInfoWindow',  @closeInfoWindow
 
 	render: ->
-		@map = new google.maps.Map @el, 
-			center: new google.maps.LatLng(-30.391830328088137, -52.767333984375)
-			zoom: 9#7
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-
+		@map = new google.maps.Map @el, App.utils.mapInitialConfigs()
 		google.maps.event.addListener @map, 'click', @onMapClick
 
-	focusTrail: (id) =>
-		# console.log @collection.get(id)
+	zoomTrail: (id) =>
+		bounds = @trailBounds @collection.get(id)
+		zoom = App.utils.getMapZoomByBounds @map, bounds
+		@map.setCenter(bounds.getCenter())
+		@map.setZoom(zoom)		
+
+	trailBounds: (model) =>
+		unless model.has('bounds')
+			bounds = new google.maps.LatLngBounds()
+			extend = _.bind(bounds.extend, bounds)
+			model.get('plots').each (plot) ->
+				_.each plot.get('google_coords'), extend
+			model.set('bounds', bounds)
+		model.get('bounds')
 	
 	# Map
 	# 
@@ -70,9 +78,11 @@ class App.View.Map extends Backbone.View
 
 	onSyncModelTrail: (model) =>
 		model.get('plots').each @addPlot
+		@zoomTrail model.id
 
 	addPlot: (model) =>
-		plot = new App.View.MapPlot map: @map, model: model
-		plot.render()
+		paths = App.utils.coordsToLatLng(model.get('plot_coordinates'))
+		model.set('google_coords', paths)
+		(new App.View.MapPlot map: @map, model: model).render()
 
 	

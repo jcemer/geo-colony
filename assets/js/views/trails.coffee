@@ -11,7 +11,7 @@ class App.View.Trails extends Backbone.View
 		@collection.bind 'all',    @onAllTrails
 
 		@list = @$('.trails-list')
-		@$el.on 'click', '.trail',               @focusTrail
+		@$el.on 'click', '.trail',               @zoomTrail
 		@$el.on 'click', '.remove-link',         @removeTrail
 		@$el.on 'click', '.reset-trails-button', @resetTrails
 
@@ -29,9 +29,9 @@ class App.View.Trails extends Backbone.View
 
 	# Trail events
 	# 
-	focusTrail: (event) =>
+	zoomTrail: (event) =>
 		el = $(event.currentTarget)
-		App.trigger 'focusTrail', el.data('trail_id')
+		App.trigger 'zoomTrail', el.data('trail_id')
 
 	removeTrail: (event) =>
 		link = $(event.currentTarget)

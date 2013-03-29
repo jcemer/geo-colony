@@ -8,9 +8,8 @@ class App.View.MapPlot extends Backbone.View
 
 	render: =>
 		color = @model.get('livesIn').get('color')
-		paths = App.utils.coordsToLatLng(@model.get('plot_coordinates'))
 		@el = new google.maps.Polygon
-			paths: paths,
+			paths: @model.get('google_coords'),
 			fillColor: color
 			strokeColor: color
 			strokeWeight: 1
