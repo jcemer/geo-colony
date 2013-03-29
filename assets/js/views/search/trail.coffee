@@ -9,9 +9,9 @@ class App.View.SearchTrail extends Backbone.View
 		@trail  = @$('#search-trail-trail')
 		@button = @$('#search-trail-button')
 
-		@trailsView = new App.View.ColonyTrailsSelect 
+		@trailsView = new App.View.SearchTrailsSelect 
 			el: @trail
-			collection: new App.Collection.ColonyTrails
+			collection: new App.Collection.TrailsSelect
 
 		@colony.on 'change', @onChangeSelectedColony
 		@button.on 'click',  @onUseButton

@@ -34,7 +34,8 @@ task 'build:js', ->
 		'assets/js/utils.coffee'
 		'assets/js/models.coffee'
 
-		'assets/js/views/*'
+		'assets/js/views/search/*.coffee'
+		'assets/js/views/*.coffee'
 
 		'assets/js/init.coffee'
 	], 'public/assets/js/main.js'

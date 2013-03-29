@@ -27,7 +27,6 @@ App.Collection.Plots = Backbone.Collection.extend
 
 
 
-App.Model.ColonyTrail = Backbone.Model.extend
-    url: ''
-App.Collection.ColonyTrails = Backbone.Collection.extend
-	model: App.Model.ColonyTrail
+App.Model.TrailOption = Backbone.Model.extend()
+App.Collection.TrailsSelect = Backbone.Collection.extend
+	model: App.Model.TrailOption

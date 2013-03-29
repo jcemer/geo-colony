@@ -1,11 +1,11 @@
 App = window.App
 
-class App.View.ColonyTrailsSelect extends Backbone.View
+class App.View.SearchTrailsSelect extends Backbone.View
     initialize: ->
         @collection?.bind 'sync', @onSync
     
     onSyncModel: (model) =>
-        view = new App.View.ColonyTrailOption model: model
+        view = new App.View.SearchTrailOption model: model
         @views.push view
         @$el.append view.render().el
     
