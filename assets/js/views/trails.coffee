@@ -15,6 +15,7 @@ class App.View.Trails extends Backbone.View
 		@$el.on 'click', '.remove-link',         @removeTrail
 		@$el.on 'click', '.reset-trails-button', @resetTrails
 
+
 	checkEmpty: =>
 		@$el.toggleClass('empty', !@collection.size())
 
@@ -22,6 +23,9 @@ class App.View.Trails extends Backbone.View
 	# 
 	getTrail: (model) =>
 		@list.find("[data-trail_id=#{model.id}]")
+	
+	renderTrail: (model) ->
+		@template data: model.toJSON()
 
 	# Trail events
 	# 

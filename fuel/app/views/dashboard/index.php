@@ -5,12 +5,12 @@
 	</header>
 	
 	<div id="trails" class="empty">
-		<script type="text/html" id="trails-list-template">
-			<li class="trail" data-trail_id="<%= id %>" style="background-color: <%= color %>">
-				<% if(name) { %>
-				<span class="label"><%= name %></span>
+		<script type="text/html" id="trails-trail-template">
+			<li class="trail" data-trail_id="<%= data.id %>" style="background-color: <%= data.color %>">
+				<% if(data.name) { %>
+					<span class="label"><%= data.name %></span>
 				<% } else { %>
-				<span class="label loading">carregando...</span>
+					<span class="label loading">carregando...</span>
 				<% } %>
 				<a href="#" class="remove-link" title="remover">remover</a>
 			</li>
