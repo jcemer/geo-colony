@@ -1,6 +1,8 @@
 App = window.App
 
 class App.View.Trails extends Backbone.View
+	template: _.template($('#trails-list-template').html())
+
 	initialize: ->
 		@collection.bind 'add',    @onAddTrail
 		@collection.bind 'change', @onChangeTrail
@@ -18,13 +20,8 @@ class App.View.Trails extends Backbone.View
 
 	# Trail
 	# 
-	trail: (model) =>
+	getTrail: (model) =>
 		@list.find("[data-trail_id=#{model.id}]")
-
-	trailTemplate: _.template($('#trails-list-template').html())
-
-	trailHtml: (model) =>
-		@trailTemplate model.toJSON()
 
 	# Trail events
 	# 
@@ -43,16 +40,16 @@ class App.View.Trails extends Backbone.View
 	# Collection
 	# 
 	onAddTrail: (model) =>
-		@list.append @trailHtml(model)
+		@list.append @template(model.toJSON())
 
 	onChangeTrail: (model) =>
-		@trail(model).replaceWith @trailHtml(model)
+		@getTrail(model).replaceWith @template(model.toJSON())
 
 	onResetTrails: =>
 		@list.empty()
 
 	onRemoveTrail: (model) =>
-		@trail(model).remove()
+		@getTrail(model).remove()
 
 	onAllTrails: =>
 		@checkEmpty()
