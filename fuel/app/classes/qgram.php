@@ -33,7 +33,7 @@ class Qgram {
 			$lines++;
 			foreach (Qgram::_qgrams($data['name']) as $item)
 			{
-				$query .= $sql.' VALUES('.$id.', '.$item["position"].', '.DB::quote($item["qgram"]).');';
+				$query .= $sql.' VALUES('.$id.', '.$item['position'].', '.DB::quote($item['qgram']).');';
 			}
 		}
 		DB::query($query)->execute();
@@ -61,6 +61,7 @@ class Qgram {
 	}
 
 
+
 	static public function search($table, $str)
 	{
 		DB::query('CREATE TEMPORARY TABLE `qgram` (
@@ -70,24 +71,38 @@ class Qgram {
 		$sql = 'INSERT INTO `qgram` (`position`, `qgram`)';		
 		foreach (Qgram::_qgrams($str) as $item)
 		{
-			DB::query($sql.' VALUES('.$item["position"].', '.DB::quote($item["qgram"]).');')->execute();
+			DB::query($sql.' VALUES('.$item['position'].', '.DB::quote($item['qgram']).');')->execute();
 		}
 
 		$search = DB::quote($str);
 		return DB::query('
-			SELECT t.id, t.name
-			FROM '.$table.' AS t, '.$table.'_qgram AS tq, qgram AS q
-			WHERE 
-				t.id = tq.id AND 
-				tq.qgram = q.qgram AND
-				ABS(tq.position - q.position) <= '.Qgram::k.' AND 
-				ABS(LENGTH(t.name) - LENGTH('.$search.')) <= '.Qgram::k.'
-			GROUP BY t.id, t.name
-			HAVING
-				COUNT(*) >= LENGTH(t.name) - 1 - ('.Qgram::k.' - 1) * '.Qgram::q.' AND 
-				COUNT(*) >= LENGTH('.$search.') - 1 - ('.Qgram::k.' - 1) * '.Qgram::q.'
-			ORDER BY edit_distance(t.name, '.$search.')
+			SELECT id, name FROM '.$table.' WHERE '.Qgram::search_likes($str).'
+			UNION (
+				SELECT t.id, t.name
+				FROM '.$table.' AS t, '.$table.'_qgram AS tq, qgram AS q
+				WHERE 
+					t.id = tq.id AND 
+					tq.qgram = q.qgram AND
+					ABS(tq.position - q.position) <= '.Qgram::k.' AND 
+					ABS(LENGTH(t.name) - LENGTH('.$search.')) <= '.Qgram::k.'
+				GROUP BY t.id, t.name
+				HAVING
+					COUNT(*) >= LENGTH(t.name) - 1 - ('.Qgram::k.' - 1) * '.Qgram::q.' AND 
+					COUNT(*) >= LENGTH('.$search.') - 1 - ('.Qgram::k.' - 1) * '.Qgram::q.'
+				ORDER BY edit_distance(t.name, '.$search.')
+			)
 		')->execute();
-	}	
+	}
 
+	static private function search_likes($str)
+	{
+		$array = preg_split('/[\s]+/', $str);
+		ArrayUtil::combination($array, $likes);
+
+		$likes = array_map(function($item) { 
+			return 'name LIKE '.DB::quote('%'.implode('%', $item).'%');
+		}, $likes);
+
+		return implode($likes, ' OR ');
+	}
 }
