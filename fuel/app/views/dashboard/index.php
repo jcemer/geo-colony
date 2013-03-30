@@ -67,30 +67,23 @@
 		</form>
 	</div>
 	
-	<div id="search-landholder" class="panel">
+	<form action="" id="search-landholder" class="panel open">
 		<h3 class="header">Proprietários</h3>
-		<form action="" class="content">
+		<div class="content">
 			<fieldset>
 				<ol>
 					<li>
-						<label for="">Nome da colônia</label>
-						<select name="" id="">
-							<option value="">Garibaldi</option>
-						</select>
-					</li>
-					<li>
-						<label for="">Nome da linha / travessão</label>
-						<select name="" id="">
-							<option value="">Nova Sardenha</option>
-						</select>
+						<?php echo Form::label('Nome da família', 'name', array('for' => 'search-landholder-name')); ?>
+						<?php echo Form::input('name', null, array('id' => 'search-landholder-name')); ?>
 					</li>
 				</ol>
 			</fieldset>
 			<div class="buttons">
-				<button type="button" class="button">adicionar</button>
+				<button id="search-trail-button" class="button">pesquisar</button>
 			</div>
-		</form>
-	</div>
+			<ul id="search-landholder-table"></ul>
+		</div>
+	</form>
 	
 	<footer class="footer">
 		2013 - <a href="#">sobre o projeto</a>

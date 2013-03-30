@@ -13,14 +13,10 @@ class App.View.Main extends Backbone.View
 		App.on 'resetTrails', @resetTrails
 
 		# sub views
-		@map = new App.View.Map el: @$('#map'), collection: @collection
-		@map.render()
-
-		@trails = new App.View.Trails el: @$('#trails'), collection: @collection
-		@trails.render()
-
-		@searchTrails = new App.View.SearchTrail el: @$('#search-trail')
-		@searchTrails.render()
+		(new App.View.Map el: @$('#map'), collection: @collection).render()
+		(new App.View.Trails el: @$('#trails'), collection: @collection).render()
+		(new App.View.SearchTrail el: @$('#search-trail')).render()
+		(new App.View.SearchLandholder el: @$('#search-landholder')).render()
 		
 		# storage
 		@storage = new App.Storage('trails')

@@ -133,9 +133,19 @@ a
 		max-height: 10px
 	label
 		display: block
-	select
+	select, input
 		margin: 0 0 5px 0
 		width: 100%
+		box-sizing: border-box
+		&:focus
+			outline: none
+	input
+		font: 12px 'lucida grande', tahoma, verdana, arial, sans-serif
+		line-height: 1.2
+		padding: 2px 4px
+		border: 1px solid #DDD
+		color: #333
+		background: #FCFCFC
 	.button
 		float: right
 

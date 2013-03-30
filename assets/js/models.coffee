@@ -31,3 +31,6 @@ App.Model.SearchTrail = Backbone.Model.extend()
 App.Collection.SearchTrails = Backbone.Collection.extend
     model: App.Model.SearchTrail
 
+App.Model.SearchLandholder = Backbone.Model.extend()
+App.Collection.SearchLandholders = Backbone.Collection.extend
+	model: App.Model.SearchLandholder
