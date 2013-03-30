@@ -2,28 +2,55 @@
 
 class Qgram {
 
+	const k = 3;
+	const q = 3;
+
+	static private function _qgrams($str)
+	{
+		$ret = array();
+		$str = '##'.trim($str).'$$';
+		for ($i = 0; $i < mb_strlen($str) - (Qgram::q - 1); $i++)
+		{
+			$ret[] = array(
+				'position' => $i + 1,
+				'qgram'    => mb_substr($str, $i, Qgram::q)
+			);
+		}
+		return $ret;
+	}
+
 	static public function generate($table, $id)
 	{
-		Qgram::clear($table, $id);
+		Qgram::delete($table, $id);
 
 		$sql = 'INSERT INTO `'.$table.'_qgram` (`id`, `position`, `qgram`)';
 		$lines = 0;
+		$query = '';
 
-		foreach (Qgram::get_id_and_name($table, $id) as $data)
+		foreach (Qgram::_generate_select($table, $id) as $data)
 		{
 			$id = $data['id'];
-			$name = '##'.trim($data['name']).'$$';
 			$lines++;
-			for ($i = 0; $i < mb_strlen($name) - 2; $i++)
+			foreach (Qgram::_qgrams($data['name']) as $item)
 			{
-				$qgram = mb_substr($name, $i, 3);
-				DB::query($sql.' VALUES('.$id.', '.($i + 1).', '.DB::quote($qgram).')')->execute();
+				$query .= $sql.' VALUES('.$id.', '.$item["position"].', '.DB::quote($item["qgram"]).');';
 			}
 		}
+		DB::query($query)->execute();
 		echo $lines.' lines inserted';
 	}
 
-	static public function clear($table, $id)
+	static private function _generate_select($table, $id)
+	{
+		$sel = DB::select('id', 'name')->from($table);
+		if ($id != '*')
+		{
+			$sel = $sel->where('id', $id);
+		}
+		return $sel->execute();
+	}
+
+	static public function delete($table, $id)
 	{
 		$del = DB::delete($table.'_qgram');
 		if ($id != '*')
@@ -33,14 +60,34 @@ class Qgram {
 		$del->execute();
 	}
 
-	static private function get_id_and_name($table, $id)
+
+	static public function search($table, $str)
 	{
-		$sel = DB::select('id', 'name')->from($table);
-		if ($id != '*')
+		DB::query('CREATE TEMPORARY TABLE `qgram` (
+			`position` smallint(5), `qgram` char(3)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8;')->execute();
+
+		$sql = 'INSERT INTO `qgram` (`position`, `qgram`)';		
+		foreach (Qgram::_qgrams($str) as $item)
 		{
-			$sel = $sel->where('id', $id);
+			DB::query($sql.' VALUES('.$item["position"].', '.DB::quote($item["qgram"]).');')->execute();
 		}
-		return $sel->execute();
-	}
+
+		$search = DB::quote($str);
+		return DB::query('
+			SELECT t.id, t.name
+			FROM '.$table.' AS t, '.$table.'_qgram AS tq, qgram AS q
+			WHERE 
+				t.id = tq.id AND 
+				tq.qgram = q.qgram AND
+				ABS(tq.position - q.position) <= '.Qgram::k.' AND 
+				ABS(LENGTH(t.name) - LENGTH('.$search.')) <= '.Qgram::k.'
+			GROUP BY t.id, t.name
+			HAVING
+				COUNT(*) >= LENGTH(t.name) - 1 - ('.Qgram::k.' - 1) * '.Qgram::q.' AND 
+				COUNT(*) >= LENGTH('.$search.') - 1 - ('.Qgram::k.' - 1) * '.Qgram::q.'
+			ORDER BY edit_distance(t.name, '.$search.')
+		')->execute();
+	}	
 
 }
