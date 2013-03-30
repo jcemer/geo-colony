@@ -3,13 +3,7 @@
 class Controller_Api_Colonies extends Controller_Rest
 {
 
-	public function get_id()
-	{
-		$data = Model_Colony::find($this->param('id'));
-		return $this->response($data);
-	}
-
-	public function get_trails()
+	public function get_search_trails()
 	{
 		$data = Model_Colony::find($this->param('id'), array(
 			'related' => array(

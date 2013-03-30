@@ -3,7 +3,7 @@ return array(
 	'_root_'                             => 'dashboard/index',
 	'_404_'                              => 'dashboard/404',
      
-	'api/colonies/:id/trails'            => 'api/colonies/trails',
+	'api/colonies/:id/search/trails'     => 'api/colonies/search_trails',
 	'api/:controller/search'             => 'api/$1/search',
 	'api/:controller/:id'                => 'api/$1/id',
 

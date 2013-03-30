@@ -18,7 +18,6 @@ App.Collection.Trails = Backbone.Collection.extend
     model: App.Model.Trail
 
 
-
 App.Model.Plot = Backbone.RelationalModel.extend
     urlRoot: 'api/plots'
 App.Collection.Plots = Backbone.Collection.extend
@@ -26,7 +25,9 @@ App.Collection.Plots = Backbone.Collection.extend
     model: App.Model.Plot
 
 
+# Search
 
-App.Model.TrailOption = Backbone.Model.extend()
-App.Collection.TrailsSelect = Backbone.Collection.extend
-	model: App.Model.TrailOption
+App.Model.SearchTrail = Backbone.Model.extend()
+App.Collection.SearchTrails = Backbone.Collection.extend
+    model: App.Model.SearchTrail
+

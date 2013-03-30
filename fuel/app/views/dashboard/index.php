@@ -21,9 +21,9 @@
 		</div>
 	</div>
 	
-	<div id="search-trail" class="panel open">
+	<form action="" id="search-trail" class="panel">
 		<h3 class="header">Colônias</h3>
-		<form action="" class="content">
+		<div class="content">
 			<fieldset>
 				<ol>
 					<li>
@@ -37,10 +37,10 @@
 				</ol>
 			</fieldset>
 			<div class="buttons">
-				<button type="button" id="search-trail-button" class="button" disabled>adicionar</button>
+				<button id="search-trail-button" class="button" disabled>adicionar</button>
 			</div>
-		</form>
-	</div>
+		</div>
+	</form>
 	
 	<div id="search-location" class="panel">
 		<h3 class="header">Localidades</h3>
