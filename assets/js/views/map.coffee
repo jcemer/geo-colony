@@ -18,6 +18,7 @@ class App.View.Map extends Backbone.View
 
 	zoomLand: (id) =>
 		return unless @mapReady()
+		@closeInfoWindow()
 		bounds = @landBounds @collection.get(id)
 		zoom = App.utils.getMapZoomByBounds @map, bounds
 		@map.setCenter(bounds.getCenter())
