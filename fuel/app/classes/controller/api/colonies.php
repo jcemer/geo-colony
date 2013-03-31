@@ -8,7 +8,7 @@ class Controller_Api_Colonies extends Controller_Rest
 		$data = Model_Colony::find($this->param('id'), array(
 			'related' => array(
 				'trails' => array(
-					'select' => array('id', 'name', 'colony_id')
+					'select' => array('id', 'name')
 				)
 			)
 		));
