@@ -27,6 +27,7 @@ task 'build:js', ->
 		'assets/js/vendor/underscore.js'
 		'assets/js/vendor/backbone.js'
 		'assets/js/vendor/backbone-relational.js'
+		'assets/js/vendor/backbone-autocomplete.js'
 		'assets/js/vendor/infobox.js'
 
 		'assets/js/app.coffee'
