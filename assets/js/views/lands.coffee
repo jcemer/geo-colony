@@ -42,6 +42,7 @@ class App.View.Lands extends Backbone.View
 	# Collection
 	onAddLand: (model) =>
 		@list.append @renderLand(model)
+		@list.scrollTop(9000)
 
 	onChangeLand: (model) =>
 		@getLand(model).replaceWith @renderLand(model)
