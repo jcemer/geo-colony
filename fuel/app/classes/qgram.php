@@ -62,7 +62,7 @@ class Qgram {
 
 
 
-	static public function search($table, $str)
+	static public function search($table, $str, $join_table = '')
 	{
 		DB::query('CREATE TEMPORARY TABLE `qgram` (
 			`position` smallint(5), `qgram` char(3)
@@ -75,11 +75,12 @@ class Qgram {
 		}
 
 		$search = DB::quote($str);
+		$join_table = $join_table ? 'JOIN '.$join_table : '';
 		return DB::query('
-			SELECT id, name FROM '.$table.' WHERE '.Qgram::search_likes($str).'
+			SELECT t.id, t.name FROM '.$table.' AS t '.$join_table.' WHERE '.Qgram::search_likes($str).'
 			UNION (
 				SELECT t.id, t.name
-				FROM '.$table.' AS t, '.$table.'_qgram AS tq, qgram AS q
+				FROM '.$table.' AS t '.$join_table.', '.$table.'_qgram AS tq, qgram AS q
 				WHERE 
 					t.id = tq.id AND 
 					tq.qgram = q.qgram AND
