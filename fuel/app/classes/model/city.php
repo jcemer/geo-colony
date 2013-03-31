@@ -11,6 +11,7 @@ class Model_City extends \Orm\Model
 	);
 
 	protected static $_belongs_to = array('state');
+	protected static $_has_many = array('plots');
 
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(
@@ -22,4 +23,13 @@ class Model_City extends \Orm\Model
 			'mysql_timestamp' => false,
 		),
 	);
+
+	public static function findByNameWithPlots($search)
+	{
+		return DB::query('
+			SELECT DISTINCT t.id, t.name 
+			FROM cities t JOIN plots ON plots.city_id = t.id
+			WHERE t.name LIKE '.DB::quote($search.'%').' ORDER BY t.name
+		')->execute();
+	}
 }

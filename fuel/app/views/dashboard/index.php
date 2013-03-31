@@ -42,29 +42,23 @@
 		</div>
 	</form>
 	
-	<div id="search-location" class="panel">
+	<div id="search-location" class="panel open">
 		<h3 class="header">Localidades</h3>
-		<form action="" class="content">
-			<fieldset>
-				<ol>
-					<li>
-						<label for="">Nome da colônia</label>
-						<select name="" id="">
-							<option value="">Garibaldi</option>
-						</select>
-					</li>
-					<li>
-						<label for="">Nome da linha / travessão</label>
-						<select name="" id="">
-							<option value="">Nova Sardenha</option>
-						</select>
-					</li>
-				</ol>
-			</fieldset>
-			<div class="buttons">
-				<button type="button" class="button">adicionar</button>
-			</div>
-		</form>
+		<div class="content">
+			<form action="" id="search-city">
+				<fieldset>
+					<ol>
+						<li>
+							<?php echo Form::label('Cidade', 'name', array('for' => 'search-city-name')); ?>
+							<?php echo Form::input('name', null, array('id' => 'search-city-name')); ?>
+						</li>
+					</ol>
+				</fieldset>
+				<div class="buttons">
+					<button id="search-city-button" class="button">pesquisar</button>
+				</div>
+			</form>
+		</div>
 	</div>
 	
 	<form action="" id="search-landholder" class="panel">
