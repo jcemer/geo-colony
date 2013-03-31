@@ -17,8 +17,7 @@ class App.View.SearchLandholder extends Backbone.View
 	onSubmit: (event) =>
 		event.preventDefault()
 		search = @fieldName.val()
-		@collection.url = 'api/landholders/search?q=' + search
-		@collection.fetch()
+		@collection.fetch data: query: search
 
 	onSyncModel: (model) =>
 		@table.append @template data: model.toJSON()

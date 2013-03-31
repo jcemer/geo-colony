@@ -33,4 +33,5 @@ App.Collection.SearchTrails = Backbone.Collection.extend
 
 App.Model.SearchLandholder = Backbone.Model.extend()
 App.Collection.SearchLandholders = Backbone.Collection.extend
+	url: 'api/landholders/search'
 	model: App.Model.SearchLandholder

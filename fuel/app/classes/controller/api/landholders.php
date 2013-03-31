@@ -5,14 +5,14 @@ class Controller_Api_Landholders extends Controller_Rest
 
 	public function get_search()
 	{
-		$search = Input::get('q');
-		if (empty($search))
+		$query = Input::get('query');
+		if (empty($query))
 		{
-			throw new Exception('search can provide q');
+			throw new Exception('search can provide query');
 		}
 		$data = Qgram::search(
 			'landholders', 
-			$search, 
+			$query, 
 			'plot_landholders ON plot_landholders.landholder_id = t.id'
 		);
 		return $this->response($data);
