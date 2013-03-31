@@ -17,20 +17,3 @@ class App.View.SearchLandholder extends Backbone.View
 		@landholdersTableView.collection.url = 'api/landholders/search?q=' + search
 		@landholdersTableView.collection.fetch()
 
-	# 	@trailsView = new App.View.SearchTrailsSelect 
-	# 		el: @trail
-	# 		collection: new App.Collection.TrailsSelect
-
-	# 	@colony.on 'change', @onChangeSelectedColony
-	# 	@button.on 'click',  @onUseButton
-
-	# 
-
-	# onUseButton: =>
-	# 	trail_id = @trail.val()
-	# 	unless trail_id is '-' or @button.attr('disabled')
-	# 		App.trigger 'addTrail', trail_id
-
-	# onDisabled: (event, data) =>
-	# 	@button.attr('disabled', data)
-
