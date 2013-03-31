@@ -3,10 +3,11 @@ App = window.App
 class App.View.MapPlotWindow extends Backbone.View
 	tagName: 'article'
 	template: _.template($('#map-plot-window-template').html())
+	events:
+		'click .nav a': 'nav'
 
 	initialize: ->
 		@model.bind 'change', @onChange
-		@$el.on 'click', '.nav a', @nav
 
 	render: =>
 		@$el.html @template data: @model.toJSON()

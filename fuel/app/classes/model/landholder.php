@@ -11,6 +11,8 @@ class Model_Landholder extends \Orm\Model
 		'updated_at'
 	);
 
+	protected static $_has_many = array('plot_landholders');
+
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(
 			'events' => array('before_insert'),

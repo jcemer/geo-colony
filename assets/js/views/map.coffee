@@ -3,12 +3,12 @@ App = window.App
 class App.View.Map extends Backbone.View
 
 	initialize: ->
-		@collection.bind 'sync',   @onSyncTrails
-		@collection.bind 'change', @onChangeTrails
-		@collection.bind 'reset',  @onResetTrails
-		@collection.bind 'remove', @onRemoveTrail
+		@collection.bind 'sync',   @onSyncLands
+		@collection.bind 'change', @onChangeLands
+		@collection.bind 'reset',  @onResetLands
+		@collection.bind 'remove', @onRemoveLand
 
-		App.on 'zoomTrail',        @zoomTrail
+		App.on 'zoomLand',        @zoomLand
 		App.on 'openInfoWindow',   @openInfoWindow
 		App.on 'closeInfoWindow',  @closeInfoWindow
 
@@ -16,13 +16,13 @@ class App.View.Map extends Backbone.View
 		@map = new google.maps.Map @el, App.utils.mapInitialConfigs()
 		google.maps.event.addListener @map, 'click', @onMapClick
 
-	zoomTrail: (id) =>
-		bounds = @trailBounds @collection.get(id)
+	zoomLand: (id) =>
+		bounds = @landBounds @collection.get(id)
 		zoom = App.utils.getMapZoomByBounds @map, bounds
 		@map.setCenter(bounds.getCenter())
 		@map.setZoom(zoom)		
 
-	trailBounds: (model) =>
+	landBounds: (model) =>
 		unless model.has('bounds')
 			bounds = new google.maps.LatLngBounds()
 			extend = _.bind(bounds.extend, bounds)
@@ -32,13 +32,11 @@ class App.View.Map extends Backbone.View
 		model.get('bounds')
 	
 	# Map
-	# 
 	onMapClick: =>
 		@closeInfoWindow()
 
 
 	# Info Window
-	# 
 	closeInfoWindow: =>
 		@infoWindow?.close()
 
@@ -58,27 +56,26 @@ class App.View.Map extends Backbone.View
 		@infoWindow.open @map
 
 	# Colection
-	# 
-	onChangeTrails: =>
+	onChangeLands: =>
 		@closeInfoWindow()
 
-	onRemoveTrail: (model) =>
+	onRemoveLand: (model) =>
 		# hack to remove plots
 		model.unset('plots')
 	
-	onResetTrails: (c, collection) =>
+	onResetLands: (c, collection) =>
 		@closeInfoWindow()
-		_.each collection.previousModels, @onRemoveTrail
+		_.each collection.previousModels, @onRemoveLand
 
-	onSyncTrails: (models) =>
+	onSyncLands: (models) =>
 		if models.each
-			models.each @onSyncModelTrail
+			models.each @onSyncModelLand
 		else
-			@onSyncModelTrail models
+			@onSyncModelLand models
 
-	onSyncModelTrail: (model) =>
+	onSyncModelLand: (model) =>
 		model.get('plots').each @addPlot
-		@zoomTrail model.id
+		@zoomLand model.id
 
 	addPlot: (model) =>
 		paths = App.utils.coordsToLatLng(model.get('plot_coordinates'))

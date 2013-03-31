@@ -4,9 +4,9 @@
 		<h2 class="title">Mapa das colônias <b>italianas</b> e <b>alemãs</b> no <b>Rio Grande do Sul</b></h2>
 	</header>
 	
-	<div id="trails" class="empty">
-		<script type="text/html" id="trails-trail-template">
-			<li class="trail" data-trail_id="<%= data.id %>" style="background-color: <%= data.color %>">
+	<div id="lands" class="empty">
+		<script type="text/html" id="lands-land-template">
+			<li class="land" data-land_id="<%= data.id %>" style="background-color: <%= data.color %>">
 				<% if (data.name) { %>
 					<span class="label"><%= data.name %></span>
 				<% } else { %>
@@ -15,9 +15,9 @@
 				<a href="#" class="remove-link" title="remover">remover</a>
 			</li>
 		</script>
-		<ul class="trails-list"></ul>
+		<ul class="lands-list"></ul>
 		<div class="buttons">
-			<button type="button" class="reset-trails-button button">limpar</button>
+			<button type="button" class="reset-lands-button button">limpar</button>
 		</div>
 	</div>
 	

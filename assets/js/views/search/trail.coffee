@@ -28,7 +28,7 @@ class App.View.SearchTrail extends Backbone.View
 		event.preventDefault()
 		trail_id = @fieldTrail.val()
 		unless trail_id is '-' or @button.attr('disabled')
-			App.trigger 'addTrail', trail_id
+			App.trigger 'addLand', 'T' + trail_id
 
 	onDisabled: (event, data) =>
 		@button.attr('disabled', data)

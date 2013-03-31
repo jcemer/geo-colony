@@ -2,8 +2,8 @@ App = window.App
 
 Backbone.Relational.store.addModelScope(App)
 
-App.Model.Trail = Backbone.RelationalModel.extend
-    urlRoot: 'api/trails'
+App.Model.Land = Backbone.RelationalModel.extend
+    urlRoot: 'api/lands'
     relations: [
         type: Backbone.HasMany
         key: 'plots'
@@ -13,9 +13,9 @@ App.Model.Trail = Backbone.RelationalModel.extend
             key: 'livesIn'
     ]
 
-App.Collection.Trails = Backbone.Collection.extend
-    url: 'api/trails'
-    model: App.Model.Trail
+App.Collection.Lands = Backbone.Collection.extend
+    url: 'api/lands'
+    model: App.Model.Land
 
 
 App.Model.Plot = Backbone.RelationalModel.extend
