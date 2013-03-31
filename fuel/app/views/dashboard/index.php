@@ -67,13 +67,13 @@
 		</form>
 	</div>
 	
-	<form action="" id="search-landholder" class="panel open">
+	<form action="" id="search-landholder" class="panel">
 		<h3 class="header">Proprietários</h3>
 		<div class="content">
 			<fieldset>
 				<ol>
 					<li>
-						<?php echo Form::label('Nome da família', 'name', array('for' => 'search-landholder-name')); ?>
+						<?php echo Form::label('Nome', 'name', array('for' => 'search-landholder-name')); ?>
 						<?php echo Form::input('name', null, array('id' => 'search-landholder-name')); ?>
 					</li>
 				</ol>
@@ -82,8 +82,8 @@
 				<button id="search-trail-button" class="button">pesquisar</button>
 			</div>
 			<script type="text/html" id="search-landholder-table-template">
-				<li class="landholder" data-landholder_id="<%= data.id %>">
-					<a href="#" class="label"><%= data.name %></a>
+				<li class="landholder">
+					<a href="#" data-landholder_id="<%= data.id %>" class="label"><%= data.name %></a>
 				</li>
 			</script>
 			<ul id="search-landholder-table"></ul>
