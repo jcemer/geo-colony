@@ -17,6 +17,7 @@ class App.View.Map extends Backbone.View
 		google.maps.event.addListener @map, 'click', @onMapClick
 
 	zoomLand: (id) =>
+		return unless @mapReady()
 		bounds = @landBounds @collection.get(id)
 		zoom = App.utils.getMapZoomByBounds @map, bounds
 		@map.setCenter(bounds.getCenter())
@@ -32,9 +33,12 @@ class App.View.Map extends Backbone.View
 		model.get('bounds')
 	
 	# Map
+	mapReady: =>
+		# sometimes map doesnt have all properties
+		@map.mapTypes.get(@map.getMapTypeId())
+
 	onMapClick: =>
 		@closeInfoWindow()
-
 
 	# Info Window
 	closeInfoWindow: =>

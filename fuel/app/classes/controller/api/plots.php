@@ -7,6 +7,8 @@ class Controller_Api_Plots extends Controller_Rest
 	{
 		$data = Model_Plot::find($this->param('id'), array(
 			'related' => array(
+				'colony' => array('select' => array('id', 'name')),
+				'trail' => array('select' => array('id', 'name')),
 				'nucleu' => array('select' => array('id', 'name')),
 				'section' => array('select' => array('id', 'name')),
 				'edge' => array('select' => array('id', 'name')),

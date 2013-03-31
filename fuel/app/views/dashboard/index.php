@@ -107,8 +107,8 @@
 		<h1 class="title">Dados Históricos</h1>
 		<ul>
 			<li><span class="label">Número:</span> <%= data.number %></li>
-			<li><span class="label">Colônia:</span> <%= data.livesIn.colony.name %></li>
-			<li><span class="label">Linha:</span> <%= data.livesIn.name %></li>
+			<li><span class="label">Colônia:</span> <%= data.colony && data.colony.name || '-' %></li>
+			<li><span class="label">Linha:</span> <%= data.trail && data.trail.name || '-' %></li>
 			<li><span class="label">Núcleo:</span> <%= data.nucleu && data.nucleu.name || '-' %></li>
 			<li><span class="label">Secção:</span> <%= data.section && data.section.name || '-' %></li>
 			<li><span class="label">Lado/Ala:</span> <%= data.edge && data.edge.name || '-' %></li>
