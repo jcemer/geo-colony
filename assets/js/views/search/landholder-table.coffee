@@ -1,6 +1,7 @@
 App = window.App
 
 class App.View.SearchLandholderTable extends Backbone.View
+	template: _.template($('#search-landholder-table-template').html())
 	events:
 		'click li' : 'onItemClick'
 
@@ -9,7 +10,7 @@ class App.View.SearchLandholderTable extends Backbone.View
 		@collection.bind 'reset', @onSync
 	
 	onSyncModel: (model) =>
-		@$el.append '<li data-landholder_id="' + model.id + '">' + model.get('name') + '</li>'
+		@$el.append @template data: model.toJSON()
 	
 	onSync: =>
 		@$el.empty()
@@ -17,5 +18,5 @@ class App.View.SearchLandholderTable extends Backbone.View
 
 	onItemClick: (event) =>
 		event.preventDefault()
-		landholder_id = $(event.target).data('landholder_id')
+		landholder_id = $(event.currentTarget).data('landholder_id')
 		App.trigger 'addLand', 'L' + landholder_id

@@ -5,7 +5,7 @@
 	</header>
 	
 	<div id="lands" class="empty">
-		<script type="text/html" id="lands-land-template">
+		<script type="text/html" id="lands-template">
 			<li class="land" data-land_id="<%= data.id %>" style="background-color: <%= data.color %>">
 				<% if (data.name) { %>
 					<span class="label"><%= data.name %></span>
@@ -81,6 +81,11 @@
 			<div class="buttons">
 				<button id="search-trail-button" class="button">pesquisar</button>
 			</div>
+			<script type="text/html" id="search-landholder-table-template">
+				<li class="landholder" data-landholder_id="<%= data.id %>">
+					<a href="#" class="label"><%= data.name %></a>
+				</li>
+			</script>
 			<ul id="search-landholder-table"></ul>
 		</div>
 	</form>

@@ -1,7 +1,7 @@
 App = window.App
 
 class App.View.Lands extends Backbone.View
-	template: _.template($('#lands-land-template').html())
+	template: _.template($('#lands-template').html())
 	events:
 		'click .land':               'zoomLand'
 		'click .remove-link':        'removeLand'

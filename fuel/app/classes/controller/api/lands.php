@@ -38,6 +38,10 @@ class Controller_Api_Lands extends Controller_Rest
 
 	private static function landholder_to_plots_array($data)
 	{
+		if (empty($data))
+		{
+			return null;
+		}
 		$ret = array(
 			'id' => $data['id'],
 			'name' => 'P: '.$data['name'],
@@ -66,6 +70,7 @@ class Controller_Api_Lands extends Controller_Rest
 			$data = static::landholder_to_plots_array($data);
 		}
 
+		# add type
 		if (!empty($data))
 		{
 			$data['id'] = $type.$data['id'];
@@ -81,7 +86,11 @@ class Controller_Api_Lands extends Controller_Rest
 		$data = array();
 		foreach ($params as $param)
 		{
-			$data[] = static::factory($param);
+			$obj = static::factory($param);
+			if (!empty($obj))
+			{
+				$data[] = $obj;
+			}
 		}
 		return $this->response($data);
 	}
