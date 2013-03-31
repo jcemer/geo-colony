@@ -75,12 +75,12 @@
 			<div class="buttons">
 				<button id="search-trail-button" class="button">pesquisar</button>
 			</div>
-			<script type="text/html" id="search-landholder-table-template">
+			<script type="text/html" id="search-landholder-result-template">
 				<li class="landholder">
 					<a href="#" data-landholder_id="<%= data.id %>" class="label"><%= data.name %></a>
 				</li>
 			</script>
-			<ul id="search-landholder-table"></ul>
+			<div id="search-landholder-result" class="result"></div>
 		</div>
 	</form>
 	
