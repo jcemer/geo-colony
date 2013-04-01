@@ -3,8 +3,8 @@ App = window.App
 class App.View.SearchLandholder extends Backbone.View
 	template: _.template($('#search-landholder-result-template').html())
 	events:
-		'submit': 'onSubmit'
-		'click a' : 'onItemClick'
+		'submit':  'onSubmit'
+		'click a': 'onItemClick'
 
 	initialize: ->
 		@fieldName = @$('#search-landholder-name')
