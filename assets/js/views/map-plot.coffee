@@ -4,10 +4,11 @@ class App.View.MapPlot extends Backbone.View
 
 	initialize: (options) ->
 		@map = options.map
+		@land = options.land
 		@model.bind 'remove', @onRemove
 
 	render: =>
-		color = @model.get('livesIn').get('color')
+		color = @land.get('color')
 		@el = new google.maps.Polygon
 			paths: @model.get('google_coords'),
 			fillColor: color

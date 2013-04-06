@@ -33,8 +33,8 @@ class App.View.Main extends Backbone.View
 
 	# Global events to lands
 	addLand: (id) =>
-		model = App.Model.Land.findOrCreate id: id
-		model.fetch() unless model.get("name")
+		model = new App.Model.Land id: id
+		model.fetch()
 		@collection.add model
 
 	removeLand: (id) =>

@@ -1,24 +1,12 @@
 App = window.App
 
-Backbone.Relational.store.addModelScope(App)
-
-App.Model.Land = Backbone.RelationalModel.extend
+App.Model.Land = Backbone.Model.extend
 	urlRoot: 'api/lands'
-	relations: [
-		type: Backbone.HasMany
-		key: 'plots'
-		relatedModel: 'Model.Plot'
-		collectionType: 'Collection.Plots',
-		reverseRelation:
-			key: 'livesIn'
-	]
-
 App.Collection.Lands = Backbone.Collection.extend
 	url: 'api/lands'
 	model: App.Model.Land
 
-
-App.Model.Plot = Backbone.RelationalModel.extend
+App.Model.Plot = Backbone.Model.extend
 	urlRoot: 'api/plots'
 App.Collection.Plots = Backbone.Collection.extend
 	url: 'api/plots'

@@ -3,12 +3,11 @@ App = window.App
 class App.View.Map extends Backbone.View
 
 	initialize: ->
-		@collection.bind 'sync',   @onSyncLands
 		@collection.bind 'change', @onChangeLands
 		@collection.bind 'reset',  @onResetLands
 		@collection.bind 'remove', @onRemoveLand
 
-		App.on 'zoomLand',        @zoomLand
+		App.on 'zoomLand',         @zoomLand
 		App.on 'openInfoWindow',   @openInfoWindow
 		App.on 'closeInfoWindow',  @closeInfoWindow
 
@@ -61,30 +60,29 @@ class App.View.Map extends Backbone.View
 		@infoWindow.open @map
 
 	# Colection
-	onChangeLands: =>
+	onChangeLands: (model) =>
 		@closeInfoWindow()
+		if _.isArray model.get('plots')
+			@addLand(model)
 
 	onRemoveLand: (model) =>
-		# hack to remove plots
-		model.unset('plots')
+		plots = model.get('plots')
+		plots.remove(plots.models)
 	
 	onResetLands: (c, collection) =>
 		@closeInfoWindow()
 		_.each collection.previousModels, @onRemoveLand
 
-	onSyncLands: (models) =>
-		if models.each
-			models.each @onSyncModelLand
-		else
-			@onSyncModelLand models
-
-	onSyncModelLand: (model) =>
-		model.get('plots').each @addPlot
+	addLand: (model) =>
+		plots = _.map model.get('plots'), (data) =>
+			@addPlot data, model
+		model.set 'plots', new App.Collection.Plots(plots)
 		@zoomLand model.id
 
-	addPlot: (model) =>
-		paths = App.utils.coordsToLatLng(model.get('plot_coordinates'))
-		model.set('google_coords', paths)
-		(new App.View.MapPlot map: @map, model: model).render()
+	addPlot: (data, land) =>
+		data.google_coords = App.utils.coordsToLatLng(data.plot_coordinates)
+		model = new App.Model.Plot(data)
+		(new App.View.MapPlot map: @map, model: model, land: land).render()
+		model
 
 	

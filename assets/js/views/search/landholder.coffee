@@ -11,8 +11,6 @@ class App.View.SearchLandholder extends Backbone.View
 		@result = @$('#search-landholder-result')
 
 		@collection = new App.Collection.SearchLandholders
-		@collection.bind 'sync', @onSync
-		@collection.bind 'reset', @onSync
 
 	onSubmit: (event) =>
 		event.preventDefault()
