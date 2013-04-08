@@ -4,91 +4,93 @@
 		<h2 class="title">Mapa das colônias <b>italianas</b> e <b>alemãs</b> no <b>Rio Grande do Sul</b></h2>
 	</header>
 	
-	<div id="lands" class="empty">
-		<script type="text/html" id="lands-template">
-			<li class="land" data-land_id="<%= data.id %>" style="background-color: <%= data.color %>">
-				<% if (data.name) { %>
-					<span class="label"><%= data.name %></span>
-				<% } else { %>
-					<span class="label loading">carregando...</span>
-				<% } %>
-				<a href="#" class="remove-link" title="remover">remover</a>
-			</li>
-		</script>
-		<ul class="lands-list"></ul>
-		<div class="buttons">
-			<button type="button" class="reset-lands-button button">limpar</button>
-		</div>
-	</div>
-	
-	<form action="" id="search-trail" class="panel">
-		<h3 class="header">Colônias</h3>
-		<div class="content">
-			<fieldset>
-				<ol>
-					<li>
-						<?php echo Form::label('Nome da colônia', 'colony', array('for' => 'search-trail-colony')); ?>
-						<?php echo Form::select('colony', null, $colonies, array('id' => 'search-trail-colony')); ?>
-					</li>
-					<li>
-						<?php echo Form::label('Nome da linha / travessão', 'trail', array('for' => 'search-trail-trail')); ?>
-						<?php echo Form::select('trail', null, $trails, array('id' => 'search-trail-trail', 'disabled' => true)); ?>
-					</li>
-				</ol>
-			</fieldset>
+	<div class="util">
+		<div id="lands" class="empty">
+			<script type="text/html" id="lands-template">
+				<li class="land" data-land_id="<%= data.id %>" style="background-color: <%= data.color %>">
+					<% if (data.name) { %>
+						<span class="label"><%= data.name %></span>
+					<% } else { %>
+						<span class="label loading">carregando...</span>
+					<% } %>
+					<a href="#" class="remove-link" title="remover">remover</a>
+				</li>
+			</script>
+			<ul class="lands-list"></ul>
 			<div class="buttons">
-				<button id="search-trail-button" class="button" disabled>adicionar</button>
+				<button type="button" class="reset-lands-button button">limpar</button>
 			</div>
 		</div>
-	</form>
-	
-	<div id="search-location" class="panel open">
-		<h3 class="header">Localidades</h3>
-		<div class="content">
-			<form action="" id="search-city">
+		
+		<form action="" id="search-trail" class="panel">
+			<h3 class="header">Colônias</h3>
+			<div class="content">
 				<fieldset>
 					<ol>
 						<li>
-							<?php echo Form::label('Cidade', 'name', array('for' => 'search-city-name')); ?>
-							<?php echo Form::input('name', null, array('id' => 'search-city-name')); ?>
+							<?php echo Form::label('Nome da colônia', 'colony', array('for' => 'search-trail-colony')); ?>
+							<?php echo Form::select('colony', null, $colonies, array('id' => 'search-trail-colony')); ?>
+						</li>
+						<li>
+							<?php echo Form::label('Nome da linha / travessão', 'trail', array('for' => 'search-trail-trail')); ?>
+							<?php echo Form::select('trail', null, $trails, array('id' => 'search-trail-trail', 'disabled' => true)); ?>
 						</li>
 					</ol>
 				</fieldset>
 				<div class="buttons">
-					<button id="search-city-button" class="button">pesquisar</button>
+					<button id="search-trail-button" class="button" disabled>adicionar</button>
 				</div>
-				<script type="text/html" id="search-city-result-template">
-					<li class="trails">
-						<a href="#" data-trail_id="<%= data.id %>" class="label"><%= data.name %></a> (<%= data.plots.length %>)
+			</div>
+		</form>
+		
+		<div id="search-location" class="panel open">
+			<h3 class="header">Localidades</h3>
+			<div class="content">
+				<form action="" id="search-city">
+					<fieldset>
+						<ol>
+							<li>
+								<?php echo Form::label('Cidade', 'name', array('for' => 'search-city-name')); ?>
+								<?php echo Form::input('name', null, array('id' => 'search-city-name')); ?>
+							</li>
+						</ol>
+					</fieldset>
+					<div class="buttons">
+						<button id="search-city-button" class="button">pesquisar</button>
+					</div>
+					<script type="text/html" id="search-city-result-template">
+						<li class="trails">
+							<a href="#" data-trail_id="<%= data.id %>" class="label"><%= data.name %></a> (<%= data.plots.length %>)
+						</li>
+					</script>
+					<div id="search-city-result" class="result"></div>
+				</form>
+			</div>
+		</div>
+		
+		<form action="" id="search-landholder" class="panel">
+			<h3 class="header">Proprietários</h3>
+			<div class="content">
+				<fieldset>
+					<ol>
+						<li>
+							<?php echo Form::label('Nome', 'name', array('for' => 'search-landholder-name')); ?>
+							<?php echo Form::input('name', null, array('id' => 'search-landholder-name')); ?>
+						</li>
+					</ol>
+				</fieldset>
+				<div class="buttons">
+					<button id="search-trail-button" class="button">pesquisar</button>
+				</div>
+				<script type="text/html" id="search-landholder-result-template">
+					<li class="landholder">
+						<a href="#" data-landholder_id="<%= data.id %>" class="label"><%= data.name %></a>
 					</li>
 				</script>
-				<div id="search-city-result" class="result"></div>
-			</form>
-		</div>
-	</div>
-	
-	<form action="" id="search-landholder" class="panel">
-		<h3 class="header">Proprietários</h3>
-		<div class="content">
-			<fieldset>
-				<ol>
-					<li>
-						<?php echo Form::label('Nome', 'name', array('for' => 'search-landholder-name')); ?>
-						<?php echo Form::input('name', null, array('id' => 'search-landholder-name')); ?>
-					</li>
-				</ol>
-			</fieldset>
-			<div class="buttons">
-				<button id="search-trail-button" class="button">pesquisar</button>
+				<div id="search-landholder-result" class="result"></div>
 			</div>
-			<script type="text/html" id="search-landholder-result-template">
-				<li class="landholder">
-					<a href="#" data-landholder_id="<%= data.id %>" class="label"><%= data.name %></a>
-				</li>
-			</script>
-			<div id="search-landholder-result" class="result"></div>
-		</div>
-	</form>
+		</form>
+	</div>
 	
 	<footer class="footer">
 		2013 - <a href="#">sobre o projeto</a>

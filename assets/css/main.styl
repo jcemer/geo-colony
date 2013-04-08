@@ -74,9 +74,16 @@ ul.autocomplete
 	width: sidebar-size
 	left: 0
 	box-sizing: border-box
-	padding: 20px 15px
 	box-shadow: 2px 0 16px rgba(black, .1)
 	z-index: 1
+	header
+		padding: 15px 15px 0 15px
+	.util
+		absolute: left 0 right 0
+		top: 90px
+		bottom: 30px
+		overflow: auto
+		padding: 0 15px
 	.logo
 		replace-text: url('../img/logo.png')
 		width: 160px
@@ -90,7 +97,8 @@ ul.autocomplete
 		margin-bottom: 20px
 
 	.footer
-		absolute: bottom 10px left 15px
+		absolute: left 15px bottom 10px
+		background: white
 		font-size: 11px
 
 @keyframes appear {
@@ -101,8 +109,8 @@ ul.autocomplete
 .lands-list
 	font-size: 11px
 	margin-bottom: 5px
-	max-height: 110px
-	overflow: auto
+	// max-height: 110px
+	// overflow: auto
 	.land
 		cursor: pointer
 		position: relative
@@ -185,6 +193,7 @@ ul.autocomplete
 			font-weight: bold
 		a
 			background: url('../img/sprites.png') 0 -200px no-repeat
+			display: block
 			padding-left: 15px
 
 #search-trail
