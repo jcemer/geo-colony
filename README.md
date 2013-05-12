@@ -3,6 +3,8 @@ Geo Colony
 
 An application to geo referencing developed through the undergraduate thesis Migrating Web Applications to Open Platforms.
 
+Preview at http://geo-colony.ap01.aws.af.cm/public.
+
 Deploy
 ----------
 
