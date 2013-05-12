@@ -8,11 +8,7 @@ Preview at http://geo-colony.ap01.aws.af.cm/public.
 Deploy
 ----------
 
-1. Get the files.
-
-```
-git clone --recursive git://github.com/jcemer/geo-colony
-```
+1. Get the files. `git clone --recursive git://github.com/jcemer/geo-colony`
 
 2. Rename file `/fuel/app/config/db.example.php` to `/fuel/app/config/db.php` and set up MySQL database credentials.
 
