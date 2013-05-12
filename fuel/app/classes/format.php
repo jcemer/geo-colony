@@ -101,7 +101,15 @@ class Format
 		{
 			if (is_object($value) or is_array($value))
 			{
-				$array[$key] = $this->to_array($value);
+				$value = $this->to_array($value);
+				if (is_numeric($key))
+				{
+					$array[] = $value;
+				}
+				else
+				{
+					$array[$key] = $value;
+				}
 			}
 			else
 			{
