@@ -14,7 +14,7 @@ nbproject/
 .idea
 
 /fuel/app/config/crypt.php
-/fuel/app/db.php
+/fuel/app/config/db.php
 
 node_modules
 
