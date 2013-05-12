@@ -59,7 +59,7 @@
 						<button id="search-city-button" class="button">pesquisar</button>
 					</div>
 					<script type="text/html" id="search-city-result-template">
-						<li class="trails">
+						<li class="trail">
 							<a href="#" data-trail_id="<%= data.id %>" class="label"><%= data.name %></a> (<%= data.plots.length %>)
 						</li>
 					</script>
