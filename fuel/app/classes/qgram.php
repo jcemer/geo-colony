@@ -23,9 +23,8 @@ class Qgram {
 	{
 		Qgram::delete($table, $id);
 
-		$sql = 'INSERT INTO `'.$table.'_qgram` (`id`, `position`, `qgram`)';
 		$lines = 0;
-		$query = '';
+		$query = 'INSERT INTO `'.$table.'_qgram` (`id`, `position`, `qgram`) VALUES ';
 
 		foreach (Qgram::_generate_select($table, $id) as $data)
 		{
@@ -33,7 +32,7 @@ class Qgram {
 			$lines++;
 			foreach (Qgram::_qgrams($data['name']) as $item)
 			{
-				$query .= $sql.' VALUES('.$id.', '.$item['position'].', '.DB::quote($item['qgram']).');';
+				$query .= ' ('.$id.', '.$item['position'].', '.DB::quote($item['qgram']).'), ';
 			}
 		}
 		DB::query($query)->execute();
