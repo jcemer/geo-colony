@@ -36,47 +36,56 @@ class Controller_Api_Lands extends Controller_Rest
 		)
 	);
 
-	private static function landholder_to_plots_array($data)
+	private static function to_array($result, $type)
 	{
-		if (empty($data))
-		{
-			return null;
+		$data = array();
+		foreach ($result as $row) {
+			if (empty($data))
+			{
+				$data = array(
+					'id' => $type.$row['id'],
+					'name' => $row['name'],
+					'plots' => array()
+				);
+			}
+			$plots = &$data['plots'];
+			if (empty($plots[$row['plot_id']])) {
+				$plots[$row['plot_id']] = array(
+					'id' => $row['plot_id'],
+					'plot_coordinates' => array()
+				);
+			}
+			$plot_coordinates = &$plots[$row['plot_id']]['plot_coordinates'];
+			$plot_coordinates[] = array(
+				'latitude' => $row['latitude'],
+				'longitude' => $row['longitude']
+			);
 		}
-		$ret = array(
-			'id' => $data['id'],
-			'name' => 'P: '.$data['name'],
-			'plots' => array()
-		);
-		foreach ($data['plot_landholders'] as $item)
-		{
-			$ret['plots'][] = $item['plot'];
-		}
-		return $ret;
+		return $data;
 	}
 
 	private static function factory($param)
 	{
-		$data = array();
 		$type = !empty($param) ? $param[0] : 'X';
 		$id = substr($param, 1);
 
 		if ($type == "T")
 		{
-			$data = Model_Trail::find($id, static::$trail_options)->to_array();
+			$result = DB::query('
+				SELECT `trails`.`id`, `trails`.`name`, `plots`.`id` as `plot_id`, `plot_coordinates`.`latitude`, `plot_coordinates`.`longitude` 
+				FROM `trails` LEFT JOIN `plots` ON `trails`.`id` = `plots`.`trail_id` LEFT JOIN `plot_coordinates` ON `plots`.`id` = `plot_coordinates`.`plot_id`
+				WHERE `trails`.`id` = '.intval($id))->execute();
 		}
 		else if ($type == "L")
 		{
-			$data = Model_Landholder::find($id, static::$landholder_options);
-			$data = static::landholder_to_plots_array($data);
+			$result = DB::query('
+				SELECT `landholders`.`id`, CONCAT("P: ", `landholders`.`name`) AS name, `plots`.`id` as `plot_id`, `plot_coordinates`.`latitude`, `plot_coordinates`.`longitude` 
+				FROM `landholders` LEFT JOIN `plot_landholders` ON `landholders`.`id` = `plot_landholders`.`landholder_id` LEFT JOIN `plots` ON `plots`.`id` = `plot_landholders`.`plot_id` LEFT JOIN `plot_coordinates` ON `plots`.`id` = `plot_coordinates`.`plot_id`
+				WHERE `landholders`.`id` = '.intval($id))->execute();
 		}
-
-		# add type
-		if (!empty($data))
-		{
-			$data['id'] = $type.$data['id'];
+		if (!empty($result)) {
+			return static::to_array($result, $type);
 		}
-
-		return $data;
 	}
 
 
