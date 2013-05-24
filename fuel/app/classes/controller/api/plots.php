@@ -16,7 +16,7 @@ class Controller_Api_Plots extends Controller_Rest
 				'plot_landholders' => array(
 					'select' => array('id', 'granting', 'release', 'area', 'price'),
 					'related' => array(
-						'landholder' => array('select' => array('id', 'name')),
+						'landholder' => array('select' => array('id', 'name', 'family')),
 					)
 				),
 				'plot_coordinates' => array(
